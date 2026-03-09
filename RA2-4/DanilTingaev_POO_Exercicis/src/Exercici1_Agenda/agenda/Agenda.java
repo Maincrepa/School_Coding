@@ -28,7 +28,7 @@ public class Agenda {
     public Contacte buscarContacte(String nom) {
         for (int i = 0; i < this.numContactes; i++) {
             if (this.contactes[i] != null && this.contactes[i].getNom().equals(nom)) {
-                mostrarContacte(this.contactes[i]); // mostrar el contacte encontrat
+                System.out.println(this.contactes[i].mostrarInfo()); // mostrar el contacte encontrat
                 return this.contactes[i]; // retornem contacte retornat
             }
         }
@@ -56,7 +56,8 @@ public class Agenda {
     // Llistar tots els contactes
     public void llistarContactes() {
         for (int i = 0; i < this.numContactes; i++) {
-            mostrarContacte(this.contactes[i]);
+            String output = this.contactes[i].mostrarInfo();
+            System.out.println(output);
         }
     }
     
@@ -64,22 +65,5 @@ public class Agenda {
     public int getNumContactes() {
 
         return this.numContactes;
-    }
-
-    // Extra métode meu, mostrar contacte individual
-    public void mostrarContacte(Contacte contacte) {
-        String nom = contacte.getNom();
-        String email = contacte.getEmail();
-        String telefon = contacte.getTelefon();
-
-        String output = """
-        
-            Nom: %s
-            Email: %s
-            Telefon: %s
-
-        """.formatted(nom,email,telefon);
-
-        System.out.println(output);
     }
 }
