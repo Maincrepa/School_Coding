@@ -19,7 +19,7 @@ public class Agenda {
             return false;
         }
         this.contactes[numContactes] = contacte;
-        numContactes++;
+        this.numContactes++;
 
         return true;
     }
