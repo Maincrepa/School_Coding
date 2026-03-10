@@ -13,12 +13,12 @@ public class Agenda {
     
     // Afegir contacte (retorna true si s'ha afegit)
     public boolean afegirContacte(Contacte contacte) {
-        if (!(numContactes < MAX_CONTACTES)) {
+        if (!(this.numContactes < MAX_CONTACTES)) {
             // no hi ha espai
             System.out.println("No hi ha espai");
             return false;
         }
-        this.contactes[numContactes] = contacte;
+        this.contactes[this.numContactes] = contacte;
         this.numContactes++;
 
         return true;
@@ -46,7 +46,7 @@ public class Agenda {
 
                 this.contactes[numContactes - 1] = null;
 
-                numContactes--; // eliminem 1 del index de numero de contactes
+                this.numContactes--; // eliminem 1 del index de numero de contactes
                 return true; // true; s'ha eliminat
             }
         }
