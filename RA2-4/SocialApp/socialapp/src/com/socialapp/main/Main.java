@@ -1,5 +1,6 @@
 package com.socialapp.main;
 
+import com.socialapp.controller.RedSocial;
 import com.socialapp.view.Menu;
 
 /*
@@ -15,7 +16,7 @@ public class Main {
     ==========================================
     */
     //Crea una instancia de RedSocial
-
+    RedSocial redSocial = new RedSocial();
 
     /*
     ==========================================
@@ -29,6 +30,8 @@ public class Main {
         INSTANCIA MENU
     ==========================================
     */
+   Menu menu = new Menu();
+   
     //crea una instancia de Menu i crida mostrarMenuPrincipal()
 }
 
