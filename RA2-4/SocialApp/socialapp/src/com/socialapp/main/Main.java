@@ -8,6 +8,31 @@ prova, crea una instancia de Menu i crida mostrarMenuPrincipal(). No ha de tenir
 logica.
 */
 
+public class Main {
+    /*
+    ==========================================
+        INSTANCIES
+    ==========================================
+    */
+    //Crea una instancia de RedSocial
+
+
+    /*
+    ==========================================
+        USUARIS PROVA
+    ==========================================
+    */
+    //afegeix alguns usuaris de prova
+
+    /*
+    ==========================================
+        INSTANCIA MENU
+    ==========================================
+    */
+    //crea una instancia de Menu i crida mostrarMenuPrincipal()
+}
+
+
 /*
 Quan s'executa el programa, es mostra un menu inicial amb dues opcions: fer login o sortir.
 L'usuari introdueix el seu username i contrasenya. Si les dades son correctes, s'accedeix al
@@ -17,7 +42,3 @@ Un cop identificat, si l'usuari es de tipus Usuario veu el seu menu d'opcions. S
 Admin veu un menu diferent amb les opcions d'administracio. En qualsevol moment es pot
 tancar la sessio i tornar al menu inicial.
 */
-
-public class Main {
-    
-}

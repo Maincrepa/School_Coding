@@ -16,5 +16,106 @@ els seguents:
 */
 
 public class Usuario {
-    
+    // Atributs privats
+    private String username;
+    private String contrasenya;
+
+    /*
+    ==========================================
+        CONSTRUCTOR
+    ==========================================
+    */
+
+    public Usuario(String username, String contrasenya) {
+        if (!(validarUsername(username) && validarContrasenya(contrasenya))) {
+            // Si NO és correcte l'informació (alguna return false); info incorrecte, no podem seguir
+            System.out.println("L'informació no és correcte.");
+            return;
+        }
+        // L'informació és correcte, seguim.
+
+        this.username = username;
+        this.contrasenya = contrasenya;
+    }
+
+    /*
+    ==========================================
+        GETTERS
+    ==========================================
+    */
+
+    public String getUsername() {
+        return this.username;
+    }
+
+    public String getContrasenya() {
+        return this.contrasenya;
+    }
+
+    /*
+    ==========================================
+        SETTERS
+    ==========================================
+    */
+
+    public void setUsername(String username) {
+        if (!validarUsername(username)) {
+            // No s'ha pogut validar, informació incorrecta.
+            return;
+        }
+        // Tota informació correcte, setting.
+        this.username = username;
+    }
+
+    public void setContrasenya(String contrasenya) {
+        if (!validarContrasenya(contrasenya)) {
+            // No s'ha pogut validar, informació incorrecta.
+            return;
+        }
+        // Tota informació correcte, setting.
+        this.contrasenya = contrasenya;
+    }
+
+    /*
+    ==========================================
+        OTHER
+    ==========================================
+    */
+
+
+
+
+
+
+
+
+
+
+    /*
+    ==========================================
+        VALIDADORS
+    ==========================================
+    */
+
+    private boolean validarUsername(String username) {
+        if (username == null || username.isEmpty()) { 
+            // El username és buit, retornar
+            System.out.println("El username és buit");
+            return false;
+        }
+
+        // Tot correcte, retornem true;
+        return true;
+    }
+
+    private boolean validarContrasenya(String contrasenya) {
+        if (username == null || username.isEmpty()) { 
+            // La contrasenya és buida
+            System.out.println("La contrasenya és buida");
+            return false;
+        }
+
+        // Tot correcte, retornem true;
+        return true;
+    }
 }
