@@ -19,6 +19,12 @@ public class Usuario {
     // Atributs privats
     private String username;
     private String contrasenya;
+    private String email;
+
+    private String[] amics;
+
+    private static final int MAX_POSTS = 100;
+    private static final int MAX_AMICS = 100;
 
     /*
     ==========================================
@@ -26,8 +32,8 @@ public class Usuario {
     ==========================================
     */
 
-    public Usuario(String username, String contrasenya) {
-        if (!(validarUsername(username) && validarContrasenya(contrasenya))) {
+    public Usuario(String username, String contrasenya, String email) {
+        if (!(validarUsername(username) && validarContrasenya(contrasenya) && validarEmail(email))) {
             // Si NO és correcte l'informació (alguna return false); info incorrecte, no podem seguir
             System.out.println("L'informació no és correcte.");
             return;
@@ -36,6 +42,9 @@ public class Usuario {
 
         this.username = username;
         this.contrasenya = contrasenya;
+        this.email = email;
+
+        amics = new String[MAX_AMICS];
     }
 
     /*
@@ -50,6 +59,10 @@ public class Usuario {
 
     public String getContrasenya() {
         return this.contrasenya;
+    }
+
+    public String getEmail() {
+        return this.email;
     }
 
     /*
@@ -76,6 +89,15 @@ public class Usuario {
         this.contrasenya = contrasenya;
     }
 
+    public void setEmail(String email) {
+        if (!validarEmail(email)) {
+            // No s'ha pogut validar, informació incorrecta.
+            return;
+        }
+        // Tota informació correcte, setting.
+        this.email = email;
+    }
+
     /*
     ==========================================
         OTHER
@@ -89,7 +111,14 @@ public class Usuario {
 
 
 
+    @Override
+    public String toString() {
+        // sense toString() s'obté l'adreça de memòria de l'objecte
+        // sobreeescriu per utilitzar l'estructura meva en lloc del de Object
 
+        //return "Usuario{username = '" + this.username + "', email = " + this.email + "', posts: " + 
+        return ""; //TODO: Finalitzar métode
+    }
 
     /*
     ==========================================
@@ -108,8 +137,19 @@ public class Usuario {
         return true;
     }
 
+    private boolean validarEmail(String email) {
+        if (email == null || email.isEmpty()) { //TODO: Millorar comprovador
+            // El email és buit, retornar
+            System.out.println("El email está buit");
+            return false;
+        }
+
+        // Tot correcte, retornem true;
+        return true;
+    }
+
     private boolean validarContrasenya(String contrasenya) {
-        if (username == null || username.isEmpty()) { 
+        if (username == null || username.isEmpty()) {//TODO: Millorar comprovador
             // La contrasenya és buida
             System.out.println("La contrasenya és buida");
             return false;
