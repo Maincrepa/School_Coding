@@ -16,7 +16,7 @@ Retorna l'objecte Usuario si es correcte, o null si no.
 
 public class RedSocial {
     
-    private String[][] UsuariosArray;
+    private String[][] UsuariosArray; // TODO: Canviar a array d'objectes Usuario i no string
     private int numUsuaris;
     private static final int MAX_USUARIS = 50;
 
