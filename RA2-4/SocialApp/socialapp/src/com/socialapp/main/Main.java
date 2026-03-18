@@ -1,6 +1,7 @@
 package com.socialapp.main;
 
 import com.socialapp.controller.RedSocial;
+import com.socialapp.model.Usuario;
 import com.socialapp.view.Menu;
 
 /*
@@ -10,29 +11,44 @@ logica.
 */
 
 public class Main {
-    /*
-    ==========================================
-        INSTANCIES
-    ==========================================
-    */
-    //Crea una instancia de RedSocial
-    RedSocial redSocial = new RedSocial();
+    public static void main(String[] args) {
+        /*
+        ==========================================
+            INSTANCIES
+        ==========================================
+        */
+        //Crea una instancia de RedSocial
+        RedSocial redSocial = new RedSocial();
 
-    /*
-    ==========================================
-        USUARIS PROVA
-    ==========================================
-    */
-    //afegeix alguns usuaris de prova
+        /*
+        ==========================================
+            USUARIS PROVA
+        ==========================================
+        */
 
-    /*
-    ==========================================
-        INSTANCIA MENU
-    ==========================================
-    */
-   Menu menu = new Menu();
-   
-    //crea una instancia de Menu i crida mostrarMenuPrincipal()
+        //afegeix alguns usuaris de prova
+        for (int i = 1; i <= 3; i++) {
+            String username = ("user" + i);
+            String contrasenya = ("pass" + i);
+            String email = ("email" + i + "@example.com");
+
+            boolean resultat = redSocial.registrar(new Usuario(username, contrasenya, email));
+            if (!resultat) {
+                System.out.println("Error al registrar l'usuari: user" + i);
+            }
+        }
+
+        /*
+        ==========================================
+            INSTANCIA MENU
+        ==========================================
+        */
+
+        Menu menu = new Menu();
+        menu.mostrarMenuPrincipal();
+    
+        //crea una instancia de Menu i crida mostrarMenuPrincipal()
+    }
 }
 
 
