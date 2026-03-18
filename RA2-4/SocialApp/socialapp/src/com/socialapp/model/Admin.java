@@ -48,10 +48,10 @@ public class Admin extends Usuario {
     }
 
     public void llistarUsuaris(RedSocial red) {
-        String[][] usuaris = red.getUsuaris(); // Agafem la llista d'usuaris de RedSocial
-        
+        Usuario[] usuaris = red.getUsuaris(); // Agafem la llista d'usuaris de RedSocial
+
         for (int i = 0; i < red.getNumUsuaris(); i++) {
-            System.out.println("Username: " + usuaris[i][0] + ", Email: " + usuaris[i][2]);
+            System.out.println("Username: " + usuaris[i].getUsername() + ", Email: " + usuaris[i].getEmail());
         }
     }
 
@@ -63,7 +63,7 @@ public class Admin extends Usuario {
 
     @Override
     public String toString() {
-        return "Admin{username = '" + this.getUsername() + "', email = " + this.getEmail() + "', posts: " + this.getPosts().length + ", amics: " + this.getAmics().length + "}";
+        return "Admin{username = '" + this.getUsername() + "', email = " + this.getEmail() + "}";
     }
     
 }

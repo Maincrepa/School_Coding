@@ -16,7 +16,7 @@ Retorna l'objecte Usuario si es correcte, o null si no.
 
 public class RedSocial {
     
-    private String[][] UsuariosArray; // TODO: Canviar a array d'objectes Usuario i no string
+    private Usuario[] UsuariosArray;
     private int numUsuaris;
     private static final int MAX_USUARIS = 50;
 
@@ -28,7 +28,7 @@ public class RedSocial {
     
     // CONSTRUCTOR que inicialitza l'array
     public RedSocial() {
-        UsuariosArray = new String[MAX_USUARIS][3]; // Inicialitzem 50 usuaris amb: username, contrasenya, email
+        UsuariosArray = new Usuario[MAX_USUARIS]; // Inicialitzem 50 usuaris
         numUsuaris = 0;
     } 
 
@@ -44,9 +44,7 @@ public class RedSocial {
             System.out.println("No hi ha espai");
             return false;
         }
-        this.UsuariosArray[this.numUsuaris][0] = u.getUsername();
-        this.UsuariosArray[this.numUsuaris][1] = u.getContrasenya();
-        this.UsuariosArray[this.numUsuaris][2] = u.getEmail();
+        this.UsuariosArray[this.numUsuaris] = u; // Afegim l'usuari a la ultima posició
         this.numUsuaris++;
 
         return true; // Procés finalitzar correctament.
@@ -54,7 +52,7 @@ public class RedSocial {
 
     public boolean eliminar(String username) {
         for (int i = 0; i < this.numUsuaris; i++) {
-            if (this.UsuariosArray[i][0] != null && this.UsuariosArray[i][0].equals(username)) {
+            if (this.UsuariosArray[i] != null && this.UsuariosArray[i].getUsername().equals(username)) {
                 // Desplacem tots els usuaris següents una posició cap esquerra (-1)
                 for (int j = i; j < this.numUsuaris - 1; j++) {
                     this.UsuariosArray[j] = this.UsuariosArray[j + 1];
@@ -71,11 +69,11 @@ public class RedSocial {
 
     public Usuario buscar(String username) {
         for (int i = 0; i < this.numUsuaris; i++) {
-            if (this.UsuariosArray[i][0] != null && this.UsuariosArray[i][0].equals(username)) {
+            if (this.UsuariosArray[i] != null && this.UsuariosArray[i].getUsername().equals(username)) {
                 // Aquí podríem crear un objecte Usuario amb la informació trobada si fos necessari
                 
                 // Retornem un objecte Usuario amb username, contrasenya i email trobats
-                return new Usuario(this.UsuariosArray[i][0], this.UsuariosArray[i][1], this.UsuariosArray[i][2]); 
+                return this.UsuariosArray[i]; 
             }
         }
 
@@ -106,7 +104,7 @@ public class RedSocial {
     ==========================================
     */
 
-    public String[][] getUsuaris() {
+    public Usuario[] getUsuaris() {
         return this.UsuariosArray;
     }
 
