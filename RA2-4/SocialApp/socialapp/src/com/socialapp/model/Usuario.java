@@ -168,6 +168,10 @@ public class Usuario {
             System.out.println("No es poden afegir més amics. Has arribat al màxim.");
             return false;
         }
+        if (username.equals(this.username)) {
+            System.out.println("No et pots afegir com a amic.");
+            return false;
+        }
         for (int i = 0; i < numAmics; i++) {
             if (amics[i].equals(username)) {
                 System.out.println("Aquest amic ja està afegit.");
