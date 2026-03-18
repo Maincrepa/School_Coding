@@ -24,6 +24,9 @@ public class Usuario {
     private String[] amics;
     private String[] posts;
 
+    private int numAmics;
+    private int numPosts;
+
     private static final int MAX_POSTS = 100;
     private static final int MAX_AMICS = 100;
 
@@ -75,6 +78,14 @@ public class Usuario {
         return this.posts;
     }
 
+    public int getNumAmics() {
+        return this.numAmics;
+    }
+
+    public int getNumPosts() {
+        return this.numPosts;
+    }
+
     /*
     ==========================================
         SETTERS
@@ -115,13 +126,33 @@ public class Usuario {
     */
 
     public boolean publicarPost(String text) {
+        if (numPosts >= MAX_POSTS) {
+            // No es poden publicar més posts, s'ha arribat al màxim.
+            System.out.println("No es poden publicar més posts.");
+            return false;
+        }
 
-        return true; // Procés finalitzar correctament.
+        this.posts[numPosts] = text; // Afegim el post a l'array de posts
+        numPosts++;
+
+        return true; // Publicat correctament.
     }
 
     public boolean eliminarPost(int index) {
+        if (index < 0 || index >= numPosts) {
+            // Index fora de rang
+            System.out.println("Index fora de rang.");
+            return false;
+        }
 
-        return true; // Procés finalitzar correctament.
+        // Desplacem els posts cap -1 per omplir el buit
+        for (int i = index; i < numPosts - 1; i++) {
+            posts[i] = posts[i + 1];
+        }
+        posts[numPosts - 1] = null; // Eliminem l'últim post duplicat
+        numPosts--;
+
+        return true; // Finalitzat; Post eliminat correctament.
     }
 
 
@@ -133,13 +164,37 @@ public class Usuario {
     */
 
     public boolean afegirAmic(String username) {
-        //TODO: Comprovar que no s'ha afegit ja, i que no s'ha arribat al màxim d'amics.
-        return true; // Procés finalitzar correctament.
+        if (numAmics >= MAX_AMICS) {
+            System.out.println("No es poden afegir més amics. Has arribat al màxim.");
+            return false;
+        }
+        for (int i = 0; i < numAmics; i++) {
+            if (amics[i].equals(username)) {
+                System.out.println("Aquest amic ja està afegit.");
+                return false;
+            }
+        }
+        // Afegim l'amic a l'array d'amics
+        amics[numAmics] = username;
+        numAmics++;
+        return true; // Procés finalitzat correctament.
     }
 
     public boolean eliminarAmic(String username) {
-        //TODO: Comprovar que el username existeix a l'array d'amics i eliminar-lo.
-        return true; // Procés finalitzar correctament.
+        for (int i = 0; i < numAmics; i++) {
+            if (amics[i].equals(username)) {
+                // Desplacem cap -1 per omplir el buit
+                for (int j = i; j < numAmics - 1; j++) {
+                    amics[j] = amics[j + 1];
+                }
+                amics[numAmics - 1] = null; // Eliminem l'últim duplicat
+                numAmics--;
+                return true; // Procés finalitzat correctament.
+            }
+        }
+
+        System.out.println("No s'ha pogut eliminar l'amic. No existeix a l'array d'amics.");
+        return false; // Procés finalitzat incorrectament.
     }
 
     /*
@@ -153,7 +208,7 @@ public class Usuario {
         // sense toString() s'obté l'adreça de memòria de l'objecte
         // sobreeescriu per utilitzar l'estructura meva en lloc del de Object
 
-        return "Usuario{username = '" + this.username + "', email = " + this.email + "', posts: " + this.posts.length + ", amics: " + this.amics.length + "}";
+        return "Usuario{username = '" + this.username + "', email = " + this.email + "', posts: " + this.numPosts + ", amics: " + this.numAmics + "}";
     }
 
     /*
