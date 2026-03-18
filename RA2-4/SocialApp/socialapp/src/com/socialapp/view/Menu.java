@@ -95,6 +95,7 @@ public class Menu {
             System.out.println(menuString);
             System.out.print("Opció: ");
             escull = input.nextInt();
+            input.nextLine(); // Tancar l'input de nextInt()
         }
 
         return escull;
@@ -206,6 +207,7 @@ public class Menu {
             System.out.println(menuString);
             System.out.print("Opció: ");
             escull = input.nextInt();
+            input.nextLine(); // Tancar l'input de nextInt()
         }
 
         return escull;
@@ -237,6 +239,7 @@ public class Menu {
             System.out.println(menuString);
             System.out.print("Opció: ");
             escull = input.nextInt();
+            input.nextLine(); // Consume the newline left by nextInt()
         }
 
         return escull;
@@ -278,7 +281,7 @@ public class Menu {
 
     private static void crearPost(Usuario u) {
         System.out.print("Introdueix el text del post: ");
-        String text = input.next();
+        String text = input.nextLine();
 
         boolean resultat = u.publicarPost(text);
         if (resultat) {
@@ -291,6 +294,7 @@ public class Menu {
     private static void eliminarPost(Usuario u) {
         System.out.print("Introdueix l'index del post que vols eliminar: ");
         int index = input.nextInt();
+        input.nextLine(); // Tancar l'input de nextInt()
 
         boolean resultat = u.eliminarPost(index);
         if (resultat) {
