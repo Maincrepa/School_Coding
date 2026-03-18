@@ -22,6 +22,7 @@ public class Usuario {
     private String email;
 
     private String[] amics;
+    private String[] posts;
 
     private static final int MAX_POSTS = 100;
     private static final int MAX_AMICS = 100;
@@ -45,6 +46,7 @@ public class Usuario {
         this.email = email;
 
         amics = new String[MAX_AMICS];
+        posts = new String[MAX_POSTS];
     }
 
     /*
@@ -100,6 +102,40 @@ public class Usuario {
 
     /*
     ==========================================
+        POSTS
+    ==========================================
+    */
+
+    public boolean publicarPost(String text) {
+
+        return true; // Procés finalitzar correctament.
+    }
+
+    public boolean eliminarPost(int index) {
+
+        return true; // Procés finalitzar correctament.
+    }
+
+
+
+    /*
+    ==========================================
+        AMICS
+    ==========================================
+    */
+
+    public boolean afegirAmic(String username) {
+        //TODO: Comprovar que no s'ha afegit ja, i que no s'ha arribat al màxim d'amics.
+        return true; // Procés finalitzar correctament.
+    }
+
+    public boolean eliminarAmic(String username) {
+        //TODO: Comprovar que el username existeix a l'array d'amics i eliminar-lo.
+        return true; // Procés finalitzar correctament.
+    }
+
+    /*
+    ==========================================
         OTHER
     ==========================================
     */
@@ -149,7 +185,7 @@ public class Usuario {
     }
 
     private boolean validarContrasenya(String contrasenya) {
-        if (username == null || username.isEmpty()) {//TODO: Millorar comprovador
+        if (contrasenya == null || contrasenya.isEmpty()) {//TODO: Millorar comprovador
             // La contrasenya és buida
             System.out.println("La contrasenya és buida");
             return false;
