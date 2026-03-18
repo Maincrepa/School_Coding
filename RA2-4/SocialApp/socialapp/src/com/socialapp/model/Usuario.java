@@ -233,7 +233,7 @@ public class Usuario {
     }
 
     private boolean validarEmail(String email) {
-        if (email == null || email.isEmpty()) { //TODO: Millorar comprovador
+        if (email == null || email.isEmpty()) { // Es pot millorar comprovador, pero l'exercici no demana més
             // El email és buit, retornar
             System.out.println("El email está buit");
             return false;
@@ -244,7 +244,7 @@ public class Usuario {
     }
 
     private boolean validarContrasenya(String contrasenya) {
-        if (contrasenya == null || contrasenya.isEmpty()) {//TODO: Millorar comprovador
+        if (contrasenya == null || contrasenya.isEmpty()) { // Es pot millorar comprovador, pero l'exercici no demana més
             // La contrasenya és buida
             System.out.println("La contrasenya és buida");
             return false;
