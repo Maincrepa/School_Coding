@@ -1,6 +1,7 @@
 package com.socialapp.main;
 
 import com.socialapp.controller.RedSocial;
+import com.socialapp.model.Admin;
 import com.socialapp.model.Usuario;
 import com.socialapp.view.Menu;
 
@@ -36,6 +37,11 @@ public class Main {
             if (!resultat) {
                 System.out.println("Error al registrar l'usuari: user" + i);
             }
+        }
+
+        boolean resultat2 = redSocial.registrar(new Admin("admin", "adminpass", "admin@example.com"));
+        if (!resultat2) {
+            System.out.println("Error al registrar l'admin");
         }
 
         /*
