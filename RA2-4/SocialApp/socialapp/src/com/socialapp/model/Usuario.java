@@ -67,6 +67,14 @@ public class Usuario {
         return this.email;
     }
 
+    public String[] getAmics() {
+        return this.amics;
+    }
+
+    public String[] getPosts() {
+        return this.posts;
+    }
+
     /*
     ==========================================
         SETTERS
@@ -140,20 +148,12 @@ public class Usuario {
     ==========================================
     */
 
-
-
-
-
-
-
-
     @Override
     public String toString() {
         // sense toString() s'obté l'adreça de memòria de l'objecte
         // sobreeescriu per utilitzar l'estructura meva en lloc del de Object
 
-        //return "Usuario{username = '" + this.username + "', email = " + this.email + "', posts: " + 
-        return ""; //TODO: Finalitzar métode
+        return "Usuario{username = '" + this.username + "', email = " + this.email + "', posts: " + this.posts.length + ", amics: " + this.amics.length + "}";
     }
 
     /*
