@@ -17,6 +17,8 @@ Scanner. Rep un objecte RedSocial pel constructor i el guarda com a atribut. Te 
 
 public class Menu {
     static Scanner input = new Scanner(System.in);
+    static boolean active;
+    static Usuario usuari;
 
     /*
     ==========================================
@@ -26,8 +28,8 @@ public class Menu {
 
     public void mostrarMenuPrincipal(RedSocial redSocial) {
         System.out.println("DEBUG: Mostrant menu principal.");
-        boolean active = true;
-        Usuario usuari = null;
+        usuari = null;
+        active = true;
 
         while (active) {
             int option;
@@ -40,11 +42,14 @@ public class Menu {
 
             switch (option) {
                 case 1: // LOGIN
-                    System.out.println("DEBUG: LOGIN. | " + usuari);
-                    
                     if (usuari != null) {
-                        mostrarMenuUsuari(usuari);
-                    } else {
+                        System.out.println("DEBUG: INSTANCEOF: " + usuari.getClass().getSimpleName());
+                        if (usuari instanceof Admin) { // Usuari és admin, mostrar menu admin
+                            mostrarMenuAdmin(redSocial, (Admin) usuari);
+                        } else { // Usuari és usuari normal, mostrar menu usuari
+                            mostrarMenuUsuari(usuari);
+                        }
+                    } else { // No hi ha usuari, fer login
                         usuari = login(redSocial);
                     }
                     break;
@@ -84,7 +89,7 @@ public class Menu {
 
         ==================================
 
-        """.formatted(option == 1 ? "Login" : "Continuar");
+        """.formatted(option == 1 ? "Login" : "Continuar"); // mostrar una de les dues opcions segons si hi ha usuari o no.
 
         while (!(escull >= 0 && escull <= 1)) {
             System.out.println(menuString);
@@ -125,13 +130,46 @@ public class Menu {
                 eliminarPost(u);
                 break;
 
+            case 6: // LLISTAR POSTs
+                llistarPosts(u);
+                break;
+
+            case 0: // Log out: Sortim del usuari
+                usuari = null;
+                break;
+                
             default:
                 break;
         }
     }
 
-    public static void mostrarMenuAdmin(Admin a) {
+    public static void mostrarMenuAdmin(RedSocial red, Admin a) {
+        int escull = printMenuAdmin();
+
+        switch (escull) {
+            case 1: // VEURE PERFIL
+                veurePerfil(a);
+                break;
+
+            case 2: // ELIMINAR USUARI
+                eliminarUsuari(red, a);
+                break;
+
+            case 3: // BANEAR USUARI
+                banearUsuari(red, a);
+                break;
+
+            case 4: // LLISTAR USUARIS
+                llistarUsuaris(red, a);  
+                break;
         
+            case 0: // Log out: Sortim del admin
+                usuari = null;
+                break;
+                
+            default:
+                break;
+        }
     }
 
     /*
@@ -157,13 +195,45 @@ public class Menu {
             3. Eliminar amic
             4. Crear post
             5. Eliminar post
+            6. Llistar posts
+            0. Log out 
+
+        ==================================
+
+        """;
+
+        while (!(escull >= 0 && escull <= 6)) {
+            System.out.println(menuString);
+            System.out.print("Opció: ");
+            escull = input.nextInt();
+        }
+
+        return escull;
+    }
+
+    private static int printMenuAdmin() {
+        int escull = -1;
+
+        System.out.println("""
+                
+        ==================================
+            MENU ADMIN
+        ==================================
+        """);
+
+        String menuString = """
+
+            1. Veure perfil
+            2. Eliminar usuari
+            3. Banear usuari
+            4. Llistar usuaris
             0. Sortir 
 
         ==================================
 
         """;
 
-        while (!(escull >= 0 && escull <= 5)) {
+        while (!(escull >= 0 && escull <= 4)) {
             System.out.println(menuString);
             System.out.print("Opció: ");
             escull = input.nextInt();
@@ -230,13 +300,47 @@ public class Menu {
         }
     }
 
+    private static void llistarPosts(Usuario u) {
+        String[] posts = u.getPosts();
+        int numPosts = u.getNumPosts();
+
+        if (numPosts == 0) {
+            System.out.println("No tens posts publicats.");
+        } else {
+            System.out.println("Els teus posts:");
+            for (int i = 0; i < numPosts; i++) {
+                System.out.println((i + 1) + ". " + posts[i]);
+            }
+        }
+    }
+
     /*
     ==========================================
         MÉTODES ADMIN
     ==========================================
     */
 
+    private static void veurePerfil(Admin a) {
+        System.out.println(a.toString());
+    }
 
+    private static void eliminarUsuari(RedSocial red, Admin a) {
+        System.out.print("Introdueix el username de l'usuari que vols eliminar: ");
+        String username = input.next();
+
+        a.eliminarUsuari(red, username);
+    }
+
+    private static void banearUsuari(RedSocial red, Admin a) {
+        System.out.print("Introdueix el username de l'usuari que vols banear: ");
+        String username = input.next();
+
+        a.banearUsuari(red, username);
+    }
+
+    private static void llistarUsuaris(RedSocial red, Admin a) {
+        a.llistarUsuaris(red);
+    }
 
 
     /*
@@ -269,11 +373,6 @@ public class Menu {
 
         System.out.println("Login correcte. Benvingut " + usuari.getUsername() + "!");
         
-        if (usuari instanceof Admin) {
-            mostrarMenuAdmin((Admin) usuari);
-        } else {
-            mostrarMenuUsuari(usuari);
-        }
         return usuari;
     }
 }
