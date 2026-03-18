@@ -45,7 +45,7 @@ public class Main {
         */
 
         Menu menu = new Menu();
-        menu.mostrarMenuPrincipal();
+        menu.mostrarMenuPrincipal(redSocial);
     
         //crea una instancia de Menu i crida mostrarMenuPrincipal()
     }
