@@ -1,6 +1,5 @@
 package com.socialapp.controller;
 
-import com.socialapp.model.Admin;
 import com.socialapp.model.Usuario;
 
 /*
@@ -29,7 +28,7 @@ public class RedSocial {
     
     // CONSTRUCTOR que inicialitza l'array
     public RedSocial() {
-        UsuariosArray = new String[MAX_USUARIS][2]; // Inicialitzem 50 usuaris amb: username, contrasenya
+        UsuariosArray = new String[MAX_USUARIS][3]; // Inicialitzem 50 usuaris amb: username, contrasenya, email
         numUsuaris = 0;
     } 
 
@@ -47,29 +46,58 @@ public class RedSocial {
         }
         this.UsuariosArray[this.numUsuaris][0] = u.getUsername();
         this.UsuariosArray[this.numUsuaris][1] = u.getContrasenya();
+        this.UsuariosArray[this.numUsuaris][2] = u.getEmail();
         this.numUsuaris++;
 
         return true; // Procés finalitzar correctament.
     }
 
     public boolean eliminar(String username) {
-        
+        for (int i = 0; i < this.numUsuaris; i++) {
+            if (this.UsuariosArray[i][0] != null && this.UsuariosArray[i][0].equals(username)) {
+                // Desplacem tots els usuaris següents una posició cap esquerra (-1)
+                for (int j = i; j < this.numUsuaris - 1; j++) {
+                    this.UsuariosArray[j] = this.UsuariosArray[j + 1];
+                }
 
-        return true; // Procés finalitzar correctament.
+                this.UsuariosArray[this.numUsuaris - 1] = null; // Eliminem l'últim usuari duplicat
+                this.numUsuaris--;
+                
+                return true; // Procés finalitzar correctament.
+            }
+        }
+        return false; // Usuari no trobat.
     }
 
     public Usuario buscar(String username) {
-        
+        for (int i = 0; i < this.numUsuaris; i++) {
+            if (this.UsuariosArray[i][0] != null && this.UsuariosArray[i][0].equals(username)) {
+                // Aquí podríem crear un objecte Usuario amb la informació trobada si fos necessari
+                
+                // Retornem un objecte Usuario amb username, contrasenya i email trobats
+                return new Usuario(this.UsuariosArray[i][0], this.UsuariosArray[i][1], this.UsuariosArray[i][2]); 
+            }
+        }
 
         return null; // Usuari no trobat.
     }
 
-    public Usuario login() { //El metode login() de RedSocial retorna un objecte de tipus Usuario.
-        //if (usuari instanceof Admin) {} //Aquesta comprovacio es fa a Menu despres del login.
-
+    public Usuario login(String username, String contrasenya) { 
+        //El metode login() de RedSocial retorna un objecte de tipus Usuario.
         //busca l'usuari i comprova la contrasenya. Retorna l'objecte Usuario si es correcte, o null si no.
 
-        return null; // Login incorrecte.
+        Usuario usuari = buscar(username);
+        if (usuari == null) {
+            System.out.println("Error: No s'ha trobat l'usuari");
+            return null;
+        }
+        if (!(usuari.getContrasenya().equals(contrasenya))) {
+            // si les contrasenyes NO coincideixen, retorna incorrecte
+            System.out.println("Error: Contrasenya incorrecta");
+            return null;
+        }
+        
+        return usuari; // Login correcte.
     }
 
     /*
@@ -78,8 +106,8 @@ public class RedSocial {
     ==========================================
     */
 
-    public void getUsuaris() {
-        
+    public String[][] getUsuaris() {
+        return this.UsuariosArray;
     }
 
     public int getNumUsuaris() {
