@@ -1,5 +1,6 @@
 package com.socialapp.view;
 
+import com.socialapp.controller.RedSocial;
 import com.socialapp.model.Admin;
 import com.socialapp.model.Usuario;
 
@@ -23,9 +24,7 @@ public class Menu {
     ==========================================
     */
 
-    public void mostrarMenuPrincipal() {
-        System.out.println("MENU!!!!");
-
+    public void mostrarMenuPrincipal(RedSocial redSocial) {
         boolean active = true;
 
         while (active) {
@@ -33,13 +32,16 @@ public class Menu {
 
             switch (option) {
                 case 1: // LOGIN
-                    
-                break;
+                    login(redSocial);
+                    break;
+
                 case 0: // SORTIR
-                    
-                break;
+                    active = false;
+                    break;
             
-                default:
+
+                default: // fallback
+                    active = false;
                     break;
             }
         }
@@ -48,11 +50,11 @@ public class Menu {
 
     /*
     ==========================================
-        MÉTODE MENU USUARI i ADMIN
+        MÉTODE MENU OPCIONS
     ==========================================
     */
 
-    public static int menuOpcions() {
+    private static int menuOpcions() {
         int escull = -1;
 
         String menuString = """
@@ -79,11 +81,54 @@ public class Menu {
         return escull;
     }
 
+    /*
+    ==========================================
+        MÉTODE MENU USUARI i ADMIN
+    ==========================================
+    */
+
     public static void mostrarMenuUsuari(Usuario u) {
 
     }
 
     public static void mostrarMenuAdmin(Admin a) {
         
+    }
+
+    /*
+    ==========================================
+        MÉTODE LOGIN
+    ==========================================
+    */
+
+    private void login(RedSocial redSocial) {
+        // Demana username i contrasenya, comprova que existeix l'usuari i que la contrasenya és correcta. Retorna l'objecte Usuario si es correcte, o null si no.
+        System.out.println("""
+
+        ==================================
+                LOGIN
+        ==================================
+
+        """);
+
+        System.out.print("Username: ");
+        String username = input.next();
+
+        System.out.print("Contrasenya: ");
+        String contrasenya = input.next();
+
+        Usuario usuari = redSocial.login(username, contrasenya);
+        if (usuari == null) {
+            System.out.println("No s'ha pogut fer login.");
+            return;
+        }
+
+        System.out.println("Login correcte. Benvingut " + usuari.getUsername() + "!");
+        
+        if (usuari instanceof Admin) {
+            mostrarMenuAdmin((Admin) usuari);
+        } else {
+            mostrarMenuUsuari(usuari);
+        }
     }
 }
