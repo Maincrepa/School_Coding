@@ -17,8 +17,8 @@ Retorna l'objecte Usuario si es correcte, o null si no.
 
 public class RedSocial {
     
-    static String[][] UsuariosArray;
-    static int numUsuaris;
+    private String[][] UsuariosArray;
+    private int numUsuaris;
     private static final int MAX_USUARIS = 50;
 
     /*
@@ -39,22 +39,37 @@ public class RedSocial {
     ==========================================
     */
 
-    public static void registrar(Usuario u) {
-        // registrar(Usuario u): afegeix l'usuari a la llista.
+    public boolean registrar(Usuario u) { // registrar(Usuario u): afegeix l'usuari a la llista.
+        if (!(this.numUsuaris < MAX_USUARIS)) {
+            // Num usuaris >= MAX_USUARIS, no hi ha espai per a més usuaris.
+            System.out.println("No hi ha espai");
+            return false;
+        }
+        this.UsuariosArray[this.numUsuaris][0] = u.getUsername();
+        this.UsuariosArray[this.numUsuaris][1] = u.getContrasenya();
+        this.numUsuaris++;
+
+        return true; // Procés finalitzar correctament.
     }
 
-    public static void eliminar(String username) {
+    public boolean eliminar(String username) {
         
+
+        return true; // Procés finalitzar correctament.
     }
 
-    public static void buscar(String username) {
+    public Usuario buscar(String username) {
         
+
+        return null; // Usuari no trobat.
     }
 
-    public static void login() { //El metode login() de RedSocial retorna un objecte de tipus Usuario.
+    public Usuario login() { //El metode login() de RedSocial retorna un objecte de tipus Usuario.
         //if (usuari instanceof Admin) {} //Aquesta comprovacio es fa a Menu despres del login.
 
         //busca l'usuari i comprova la contrasenya. Retorna l'objecte Usuario si es correcte, o null si no.
+
+        return null; // Login incorrecte.
     }
 
     /*
@@ -63,11 +78,11 @@ public class RedSocial {
     ==========================================
     */
 
-    public static void getUsuaris() {
+    public void getUsuaris() {
         
     }
 
-    public static void getNumUsuaris() {
-        
+    public int getNumUsuaris() {
+        return numUsuaris;
     }
 }
