@@ -1,5 +1,7 @@
 package com.socialapp.model;
 
+import java.util.ArrayList;
+
 /*
 Representa un usuari registrat a la xarxa. Te els seguents atributs privats: username,
 contrasenya i email de tipus String. Tambe te un array de Strings anomenat posts per guardar
@@ -21,8 +23,8 @@ public class Usuario {
     private String contrasenya;
     private String email;
 
-    private String[] amics;
-    private String[] posts;
+    private ArrayList<String> amics;
+    private ArrayList<String> posts;
 
     private int numAmics;
     private int numPosts;
@@ -48,8 +50,8 @@ public class Usuario {
         this.contrasenya = contrasenya;
         this.email = email;
 
-        amics = new String[MAX_AMICS];
-        posts = new String[MAX_POSTS];
+        amics = new ArrayList<>();
+        posts = new ArrayList<>();
     }
 
     /*
@@ -70,11 +72,11 @@ public class Usuario {
         return this.email;
     }
 
-    public String[] getAmics() {
+    public ArrayList<String> getAmics() {
         return this.amics;
     }
 
-    public String[] getPosts() {
+    public ArrayList<String> getPosts() {
         return this.posts;
     }
 
@@ -132,7 +134,7 @@ public class Usuario {
             return false;
         }
 
-        this.posts[numPosts] = text; // Afegim el post a l'array de posts
+        this.posts.add(text); // Afegim el post a l'ArrayList de posts
         numPosts++;
 
         return true; // Publicat correctament.
@@ -146,10 +148,7 @@ public class Usuario {
         }
 
         // Desplacem els posts cap -1 per omplir el buit
-        for (int i = index; i < numPosts - 1; i++) {
-            posts[i] = posts[i + 1];
-        }
-        posts[numPosts - 1] = null; // Eliminem l'últim post duplicat
+        posts.remove(index);
         numPosts--;
 
         return true; // Finalitzat; Post eliminat correctament.
@@ -173,25 +172,25 @@ public class Usuario {
             return false;
         }
         for (int i = 0; i < numAmics; i++) {
-            if (amics[i].equals(username)) {
+            if (amics.get(i).equals(username)) {
                 System.out.println("Aquest amic ja està afegit.");
                 return false;
             }
         }
         // Afegim l'amic a l'array d'amics
-        amics[numAmics] = username;
+        amics.add(username);
         numAmics++;
         return true; // Procés finalitzat correctament.
     }
 
     public boolean eliminarAmic(String username) {
         for (int i = 0; i < numAmics; i++) {
-            if (amics[i].equals(username)) {
+            if (amics.get(i).equals(username)) {
                 // Desplacem cap -1 per omplir el buit
                 for (int j = i; j < numAmics - 1; j++) {
-                    amics[j] = amics[j + 1];
+                    amics.set(j, amics.get(j + 1));
                 }
-                amics[numAmics - 1] = null; // Eliminem l'últim duplicat
+                amics.remove(numAmics - 1); // Eliminem l'últim duplicat
                 numAmics--;
                 return true; // Procés finalitzat correctament.
             }

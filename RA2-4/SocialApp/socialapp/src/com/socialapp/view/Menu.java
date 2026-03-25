@@ -4,6 +4,7 @@ import com.socialapp.controller.RedSocial;
 import com.socialapp.model.Admin;
 import com.socialapp.model.Usuario;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /*
@@ -305,7 +306,7 @@ public class Menu {
     }
 
     private static void llistarPosts(Usuario u) {
-        String[] posts = u.getPosts();
+        ArrayList<String> posts = u.getPosts();
         int numPosts = u.getNumPosts();
 
         if (numPosts == 0) {
@@ -313,7 +314,7 @@ public class Menu {
         } else {
             System.out.println("Els teus posts:");
             for (int i = 0; i < numPosts; i++) {
-                System.out.println((i + 1) + ". " + posts[i]);
+                System.out.println((i + 1) + ". " + posts.get(i));
             }
         }
     }
