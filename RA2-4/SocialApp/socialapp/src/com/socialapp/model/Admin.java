@@ -50,10 +50,10 @@ public class Admin extends Usuario {
     }
 
     public void llistarUsuaris(RedSocial red) {
-        Usuario[] usuaris = red.getUsuaris(); // Agafem la llista d'usuaris de RedSocial
+        ArrayList<Usuario> usuarisList = red.getUsuaris(); // Agafem la llista d'usuaris de RedSocial
 
         for (int i = 0; i < red.getNumUsuaris(); i++) {
-            System.out.println("Username: " + usuaris[i].getUsername() + ", Email: " + usuaris[i].getEmail());
+            System.out.println("Username: " + usuarisList.get(i).getUsername() + ", Email: " + usuarisList.get(i).getEmail());
         }
     }
 
