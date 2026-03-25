@@ -1,5 +1,7 @@
 package com.socialapp.controller;
 
+import java.util.ArrayList;
+
 import com.socialapp.model.Usuario;
 
 /*
@@ -16,7 +18,7 @@ Retorna l'objecte Usuario si es correcte, o null si no.
 
 public class RedSocial {
     
-    private Usuario[] UsuariosArray;
+    private ArrayList<Usuario> UsuariosArray;
     private int numUsuaris;
     private static final int MAX_USUARIS = 50;
 
@@ -28,7 +30,7 @@ public class RedSocial {
     
     // CONSTRUCTOR que inicialitza l'array
     public RedSocial() {
-        UsuariosArray = new Usuario[MAX_USUARIS]; // Inicialitzem 50 usuaris
+        UsuariosArray = new ArrayList<>(); // Inicialitzem l'ArrayList
         numUsuaris = 0;
     } 
 
@@ -44,7 +46,7 @@ public class RedSocial {
             System.out.println("No hi ha espai");
             return false;
         }
-        this.UsuariosArray[this.numUsuaris] = u; // Afegim l'usuari a la ultima posició
+        this.UsuariosArray.add(u); // Afegim l'usuari a l'ArrayList
         this.numUsuaris++;
 
         return true; // Procés finalitzar correctament.
@@ -52,13 +54,8 @@ public class RedSocial {
 
     public boolean eliminar(String username) {
         for (int i = 0; i < this.numUsuaris; i++) {
-            if (this.UsuariosArray[i] != null && this.UsuariosArray[i].getUsername().equals(username)) {
-                // Desplacem tots els usuaris següents una posició cap esquerra (-1)
-                for (int j = i; j < this.numUsuaris - 1; j++) {
-                    this.UsuariosArray[j] = this.UsuariosArray[j + 1];
-                }
-
-                this.UsuariosArray[this.numUsuaris - 1] = null; // Eliminem l'últim usuari duplicat
+            if (this.UsuariosArray.get(i) != null && this.UsuariosArray.get(i).getUsername().equals(username)) {
+                this.UsuariosArray.remove(i);
                 this.numUsuaris--;
                 
                 return true; // Procés finalitzar correctament.
@@ -69,11 +66,11 @@ public class RedSocial {
 
     public Usuario buscar(String username) {
         for (int i = 0; i < this.numUsuaris; i++) {
-            if (this.UsuariosArray[i] != null && this.UsuariosArray[i].getUsername().equals(username)) {
+            if (this.UsuariosArray.get(i) != null && this.UsuariosArray.get(i).getUsername().equals(username)) {
                 // Aquí podríem crear un objecte Usuario amb la informació trobada si fos necessari
                 
                 // Retornem un objecte Usuario amb username, contrasenya i email trobats
-                return this.UsuariosArray[i]; 
+                return this.UsuariosArray.get(i); 
             }
         }
 
@@ -104,7 +101,7 @@ public class RedSocial {
     ==========================================
     */
 
-    public Usuario[] getUsuaris() {
+    public ArrayList<Usuario> getUsuaris() {
         return this.UsuariosArray;
     }
 
