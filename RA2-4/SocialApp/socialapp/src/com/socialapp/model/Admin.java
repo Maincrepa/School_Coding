@@ -1,5 +1,7 @@
 package com.socialapp.model;
 
+import java.util.ArrayList;
+
 import com.socialapp.controller.RedSocial;
 
 /*
@@ -16,7 +18,7 @@ Sobreescriu toString() amb @Override per indicar que l'usuari es administrador
 */
 
 public class Admin extends Usuario {
-    private String[] baneats;
+    private ArrayList<String> baneats;
     private static final int MAX_BANEATS = 50;
 
     /*
@@ -26,7 +28,7 @@ public class Admin extends Usuario {
     */
     public Admin(String username, String contrasenya, String email) {
         super(username, contrasenya, email);
-        this.baneats = new String[MAX_BANEATS];
+        this.baneats = new ArrayList<>();
     }
 
     /*
@@ -36,11 +38,11 @@ public class Admin extends Usuario {
     */
 
     public void banearUsuari(RedSocial red, String username) {
-        if (this.baneats.length >= MAX_BANEATS) {
+        if (this.baneats.size() >= MAX_BANEATS) {
             System.out.println("No es poden banear més usuaris.");
             return;
         }
-        this.baneats[this.baneats.length] = username; // Afegim el username a l'array de baneats
+        this.baneats.add(username); // Afegim el username a l'array de baneats
     }
 
     public void eliminarUsuari(RedSocial red, String username) {
