@@ -187,25 +187,3 @@ public class Supermercat {
         return subtotal;
     }
 }
-
-
-/*
-=== SUPERMERCAT JAVA ===
-1. Veure catàleg
-2. Afegir producte al carret
-3. Veure carret
-4. Eliminar producte del carret
-5. Calcular total
-6. Aplicar descompte
-7. Pagar i sortir
-Tria opció: 2
-Introdueix l'ID del producte: 2
-Quantitat: 2
-S'han afegit 2x Pollastre (1kg) al carret!
-Tria opció: 3
---- EL TEU CARRET ---
-Pollastre (1kg) x2 11.98 EUR
-------------------
-Subtotal: 11.98 EUR
-
-*/
