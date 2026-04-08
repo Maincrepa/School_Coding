@@ -24,15 +24,13 @@ Més enllà d'això, tens llibertat total. Quantes més funcionalitats útils i 
 - Nom Identificador (curt) [nomIdentificador]
 - Nom complet (de mostra) [NomMostra]
 - Disciplina o tipus d'exercici (per poder filtrar per categoria) [Disciplina]
-- Array de Resultats de les proves (per veure progrés) [ResultatsArray] & [MarcaPos]
+- Array de Resultats de les proves (per veure progrés) [ResultatsArray]
 - Edat (important per estadístiques i comparacions entre grups) [Edat]
 - Data de registre o data de la marca (per saber quan es va obtenir la millor marca) [dataIntroduccio]
 
 
 ### 2. Q: Hi haurà un límit màxim d'esportistes? Si sí, quin i per què? Si no, com ho gestionaràs?
-Definiré un límit de seguretat perquè el programa sigui fàcil de gestionar. He triat un màxim de 50 esportistes perquè és una quantitat realista per a un rànquing de gimnàs i evita que la llista es torni massa gran per a una aplicació de consola.
-
-Tot i això, utilitzaré un `ArrayList` dinàmic per poder adaptar-me a menys esportistes sense perdre espai. Si calgués ampliar el límit en el futur, només caldria modificar la constant `MAX_ESPORTISTES` o eliminar-la per deixar el llistat totalment flexible.
+Inicialment, volia posar un limit amb una constant `MAX_ESPORTISTES`, però ja que he decidit fer servir un ArrayList, no veig necessitat de posar un máxim.
 
 ## 3.2 Text
 ### 1. Q: Faràs servir arrays, ArrayList, o una combinació dels dos?
