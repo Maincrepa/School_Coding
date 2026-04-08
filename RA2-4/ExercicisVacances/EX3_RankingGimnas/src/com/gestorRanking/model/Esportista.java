@@ -184,28 +184,23 @@ public class Esportista {
     */
 
     private boolean verificarNomIdentificador(String nomIdentificador) {
-        //TODO: Implementa la lògica de verificació del nom identificador
-        return true; // Retorna true si el nom identificador és vàlid, false en cas contrari
+        return nomIdentificador != null && !nomIdentificador.trim().isEmpty();
     }
 
     private boolean verificarNomMostra(String nomMostra) {
-        //TODO: Implementa la lògica de verificació del nom de mostra
-        return true; // Retorna true si el nom de mostra és vàlid, false en cas contrari
+        return nomMostra != null && !nomMostra.trim().isEmpty();
     }
 
     private boolean verificarDisciplina(String disciplina) {
-        //TODO: Implementa la lògica de verificació de la disciplina
-        return true; // Retorna true si la disciplina és vàlida, false en cas contrari
+        return disciplina != null && !disciplina.trim().isEmpty();
     }
 
     private boolean verificarEdat(int edat) {
-        //TODO: Implementa la lògica de verificació de l'edat
-        return true; // Retorna true si l'edat és vàlida, false en cas contrari
+        return edat > 0 && edat <= 120;
     }
 
     private boolean verificarDataIntroduccio(String dataIntroduccio) {
-        //TODO: Implementa la lògica de verificació de la data d'introducció
-        return true; // Retorna true si la data d'introducció és vàlida, false en cas contrari
+        return dataIntroduccio != null && dataIntroduccio.matches("\\d{4}-\\d{2}-\\d{2}");
     }
 
 
