@@ -1,5 +1,7 @@
 package MusicApp.Controller.TipusContingut;
 
+import MusicApp.Controller.Contingut;
+
 public class Canco extends Contingut {
     protected String album;
     protected String genere;
@@ -23,6 +25,13 @@ public class Canco extends Contingut {
     public String getGenere() {
         return this.genere;
     }
+
+    //-------------------------------------
+
+    @Override
+    public String getTipus() {
+        return "Canco"; //TODO
+    } 
 
     //-------------------------------------
 

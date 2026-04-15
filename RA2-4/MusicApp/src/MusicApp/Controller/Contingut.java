@@ -29,8 +29,10 @@ public abstract class Contingut {
     //-------------------------------------
 
 
-    // Métode reproduir()
+    // Métode abstracte reproduir()
     public abstract void reproduir();
     
+    // Métode abstracte getTipus()
+    public abstract String getTipus();
 
 }
