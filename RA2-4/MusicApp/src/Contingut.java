@@ -29,6 +29,8 @@ public abstract class Contingut {
     //-------------------------------------
 
 
-    // métode reproduir()
+    // Métode reproduir()
+    public abstract void reproduir();
+    
 
 }
