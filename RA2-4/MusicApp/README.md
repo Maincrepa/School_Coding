@@ -14,7 +14,6 @@ El projecte demostra l'us de classes abstractes (no pots crear un "contingut gen
     - Gènere [String]
 
 - Podcast:
-    - Participants [String]
     - Tema [String]
     - Resum [String] (Descripció)
     - Idioma [String]
