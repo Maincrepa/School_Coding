@@ -1,18 +1,38 @@
-## Getting Started
+# Objectiu
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+L'objectiu d'aquest projecte es implementar un reproductor de musica per consola en Java.
+L'aplicacio gestiona una playlist que pot contenir tres tipus de contingut: Cançons, Podcasts i Audiollibres. L'usuari pot afegir contingut, llistar la playlist, reproduir-la sencera i veure estadistiques.
+El projecte demostra l'us de classes abstractes (no pots crear un "contingut generic"), polimorfisme (tots els continguts es tracten igual a la playlist) i l'estructura MVC amb packages separats.
 
-## Folder Structure
+# Preguntes Clau
 
-The workspace contains two folders by default, where:
+1. Pregunta 1: Quins atributs comparteixen una Canço, un Podcast i un Audiollibre? Quins son exclusius de cadascun?
+- Els tres comparteixen: titol [String], autor [String], duration (segons)[double].
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+- Canço:
+    - Album [String], 
+    - Gènere [String]
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+- Podcast:
+    - Participants [String]
+    - Tema [String]
+    - Resum [String] (Descripció)
+    - Idioma [String]
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+- Audiollibre:
+    - Rating [double]
+    - Gènere [ArrayList<String>]
+    - Idioma [String]
+    - Narrador [String]
 
-## Dependency Management
+2. Pregunta 2: Te sentit crear un objecte "Contingut" generic? Es a dir, fer new Contingut(...)? O nomes existeixen cançons, podcasts i audiollibres concrets?
+- Per [Contingut], ho faré abstracte i no generic.
 
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+3. Pregunta 3: El metode reproduir(): pots escriure un cos al pare que serveixi per a tots? O cada tipus es reprodueix de forma diferent?
+- El metode reproduir() servirá per a tots tres, ja que els tres són arxius mp3 (audio).
+
+4. Pregunta 4: El metode getDuracioFormatejada(): funciona IGUAL per a tots (convertir segons a mm:ss) o cada tipus ho fa diferent?
+- Ja que tots tres comparten "Duració", i tots són el mateix tipus d'arxiu, el convertidor funcionará igual per a tots.
+
+5. Pregunta 5: Vols poder posar Cançons, Podcasts i Audiollibres a la mateixa llista (ArrayList). De quin tipus ha de ser l'ArrayList?
+- De tipus <Contingut> ja que els tres tipus són continguts.
