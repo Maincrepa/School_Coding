@@ -35,4 +35,21 @@ public abstract class Contingut {
     // Métode abstracte getTipus()
     public abstract String getTipus();
 
+    //-------------------------------------
+    // Metode public per transformar la duració de double en un string ben formatejat
+
+    public String getDuracioFormatejada(double duration) {
+        int mins = (int)(duration / 60); // minuts
+        int secs = (int)(duration % 60); // segons
+
+        // formateem "mm:ss"
+        return String.format("%02d:%02d", mins, secs);
+    }
+
+    //-------------------------------------
+    // Metode public que retorna informació basica sobre el contingut
+
+    public String getDescripcio() {
+        return "[" + getTipus() + "] " + titol + " - " + autor;
+    }
 }

@@ -30,7 +30,7 @@ public class Canco extends Contingut {
 
     @Override
     public String getTipus() {
-        return "Canco"; //TODO
+        return "CANCO";
     } 
 
     //-------------------------------------
@@ -52,7 +52,7 @@ public class Canco extends Contingut {
         """.formatted(
             this.titol, 
             this.autor, 
-            formatDuracio(this.duration),
+            getDuracioFormatejada(this.duration),
             this.album,
             this.genere
         );
@@ -61,14 +61,5 @@ public class Canco extends Contingut {
     }
 
 
-    //-------------------------------------
-    // Metode public per transformar la duració de double en un string ben formatejat
-
-    public String getDuracioFormatejada(double duration) {
-        int mins = (int)(duration / 60); // minuts
-        int secs = (int)(duration % 60); // segons
-
-        // formateem "mm:ss"
-        return String.format("%02d:%02d", mins, secs);
-    }
+    
 }
