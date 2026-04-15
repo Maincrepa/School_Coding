@@ -1,4 +1,4 @@
-package TipusContingut;
+package MusicApp.Controller.TipusContingut;
 
 public class Canco extends Contingut {
     protected String album;

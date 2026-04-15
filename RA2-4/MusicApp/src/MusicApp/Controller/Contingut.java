@@ -1,4 +1,4 @@
-import TipusContingut.Canco;
+package MusicApp.Controller;
 
 public abstract class Contingut {
     protected String titol;

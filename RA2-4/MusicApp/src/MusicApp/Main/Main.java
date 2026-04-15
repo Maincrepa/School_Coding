@@ -1,4 +1,5 @@
-import TipusContingut.Canco;
+package MusicApp.Main;
+import MusicApp.Controller.*;;
 
 public class Main {
     
