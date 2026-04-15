@@ -29,7 +29,7 @@ El projecte demostra l'us de classes abstractes (no pots crear un "contingut gen
 - Per [Contingut], ho faré abstracte i no generic.
 
 3. Pregunta 3: El metode reproduir(): pots escriure un cos al pare que serveixi per a tots? O cada tipus es reprodueix de forma diferent?
-- El metode reproduir() servirá per a tots tres, ja que els tres són arxius mp3 (audio).
+- El metode [reproduir()] será abstracte ja que faré que cada tipus de contingut tingui també la seva "interficie" amb els valors mostrats, això és més fàcil fer-ho si el métode es abstracte (cada fill ho ha de implementar-ho)
 
 4. Pregunta 4: El metode getDuracioFormatejada(): funciona IGUAL per a tots (convertir segons a mm:ss) o cada tipus ho fa diferent?
 - Ja que tots tres comparten "Duració", i tots són el mateix tipus d'arxiu, el convertidor funcionará igual per a tots.
