@@ -19,8 +19,8 @@ El projecte demostra l'us de classes abstractes (no pots crear un "contingut gen
     - Idioma [String]
 
 - Audiollibre:
-    - Rating [double]
-    - Gènere [ArrayList<String>]
+    - Rating [int]
+    - Gènere Principal [String]
     - Idioma [String]
     - Narrador [String]
 

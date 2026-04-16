@@ -9,7 +9,7 @@ public class Canco extends Contingut {
     //-------------------------------------
 
     // Constructor
-    public Canco(String titol, String autor, double duration, String album, String genere) {
+    public Canco(String titol, String autor, int duration, String album, String genere) {
         super(titol, autor, duration);
 
         this.album = album;

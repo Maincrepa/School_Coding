@@ -3,12 +3,12 @@ package MusicApp.Controller;
 public abstract class Contingut {
     protected String titol;
     protected String autor;
-    protected double duration;
+    protected int duration;
 
 
     //-------------------------------------
 
-    public Contingut(String titol, String autor, double duration) {
+    public Contingut(String titol, String autor, int duration) {
         this.titol = titol;
         this.autor = autor;
         this.duration = duration;
@@ -38,9 +38,9 @@ public abstract class Contingut {
     //-------------------------------------
     // Metode public per transformar la duració de double en un string ben formatejat
 
-    public String getDuracioFormatejada(double duration) {
-        int mins = (int)(duration / 60); // minuts
-        int secs = (int)(duration % 60); // segons
+    public String getDuracioFormatejada(int duration) {
+        int mins = (duration / 60); // minuts
+        int secs = (duration % 60); // segons
 
         // formateem "mm:ss"
         return String.format("%02d:%02d", mins, secs);

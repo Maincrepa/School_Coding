@@ -2,41 +2,47 @@ package MusicApp.Controller.TipusContingut;
 
 import MusicApp.Controller.Contingut;
 
-public class Podcast extends Contingut {
-    protected String tema;
-    protected String resum;
+public class Audiollibre extends Contingut {
+    protected int rating; // 1-5
+    protected String genere;
     protected String idioma;
+    protected String narrador;
     
     //-------------------------------------
 
     // Constructor
-    public Podcast(String titol, String autor, int duration, String tema, String resum, String idioma) {
+    public Audiollibre(String titol, String autor, int duration, int rating, String genere, String idioma, String narrador) {
         super(titol, autor, duration);
 
-        this.tema = tema;
-        this.resum = resum;
+        this.rating = rating;
+        this.genere = genere;
         this.idioma = idioma;
+        this.narrador = narrador;
     }
 
     // Getters
 
-    public String getTema() {
-        return this.tema;
+    public String getRating() {
+        return this.rating;
     }
 
-    public String getResum() {
-        return this.resum;
+    public String getGenere() {
+        return this.genere;
     }
 
     public String getIdioma() {
         return this.idioma;
     }
 
+    public String getNarrador() {
+        return this.narrador;
+    }
+    
     //-------------------------------------
 
     @Override
     public String getTipus() {
-        return "PODCAST";
+        return "AUDIOLLIBRE";
     } 
 
     //-------------------------------------
@@ -49,25 +55,30 @@ public class Podcast extends Contingut {
             · Ara reproduïnt:
             %s
             
-            - Presentador: %s
+            - Autor: %s
             - Duració: %s
-            - Tematica: %s
+            - rating: %s
+            - Genere: %s
             - Idioma: %s
-            - Resum: %s
+            - Narrador: %s
 
         ================================
         """.formatted(
             this.titol, 
             this.autor, 
             getDuracioFormatejada(this.duration),
-            this.tema,
+            getRatingFormatejat(this.rating),
+            this.genere,
             this.idioma,
-            this.resum
+            this.narrador
         );
+
 
         System.out.println(output);
     }
 
-
+    private String getRatingFormatejat(int rating) {
+        return String.format("%d/5", rating);
+    }
     
 }
