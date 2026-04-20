@@ -22,7 +22,7 @@ public class Audiollibre extends Contingut {
 
     // Getters
 
-    public String getRating() {
+    public int getRating() {
         return this.rating;
     }
 

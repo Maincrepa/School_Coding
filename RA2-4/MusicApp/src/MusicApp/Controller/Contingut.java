@@ -22,7 +22,7 @@ public abstract class Contingut {
         return autor;
     }
 
-    public String getDuration() {
+    public int getDuration() {
         return duration;
     }
 
