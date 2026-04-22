@@ -16,15 +16,15 @@ public class JocController {
 
     // Llista d'animals disponibles (de moment hardcoded)
     private final List<Animal> animals = List.of(
-        new Animal("Gos", "gos.jpg",
+        new Animal("Gos", "gos.png",
             List.of("Te 4 potes", "Fa bup bup", "Es el millor amic de l'home")),
-        new Animal("Gat", "gat.jpg",
+        new Animal("Gat", "gat.png",
             List.of("Te 4 potes", "Fa miau", "Li agrada dormir al sofa")),
-        new Animal("Elefant", "elefant.jpg",
+        new Animal("Elefant", "elefant.png",
             List.of("Es molt gran", "Te una trompa llarga", "Viu a Africa i Asia")),
-        new Animal("Girafa", "girafa.jpg",
+        new Animal("Girafa", "girafa.png",
             List.of("Te el coll molt llarg", "Menja fulles dels arbres", "Viu a la sabana")),
-        new Animal("Lleo", "lleo.jpg",
+        new Animal("Lleo", "lleo.png",
             List.of("Es el rei de la selva", "Rugeix molt fort", "Viu en manades"))
     );
 
