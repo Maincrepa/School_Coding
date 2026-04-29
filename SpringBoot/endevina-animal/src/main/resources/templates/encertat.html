@@ -15,32 +15,51 @@
 
                         <h1 class="text-success display-4">Correcte!</h1>
                         <p class="lead">
-                            Era un
-                            <strong th:text="${animal.nom}">Animal</strong>!
+                            Era: <strong th:text="${contingut.nom}">?</strong>!
                         </p>
 
-                        <!-- Imatge ja nitida -->
-                        <img th:src="@{/images/{img}(img=${animal.imatge})}"
-                             class="img-fluid rounded my-3"
-                             style="max-width: 300px;"
-                             alt="Animal descobert">
+                        <!-- Confirmació visual/sonora del resultat -->
+                        <div th:switch="${mode}" class="my-3">
+
+                            <img th:case="'animal'"
+                                 th:src="@{/images/{f}(f=${contingut.imatge})}"
+                                 class="img-fluid rounded"
+                                 style="max-width: 300px;"
+                                 alt="Animal descobert">
+
+                            <div th:case="'canco'">
+                                <p class="text-muted mb-2">
+                                    Artista: <em th:text="${contingut.artista}">?</em>
+                                </p>
+                                <audio th:src="@{/audios/{f}(f=${contingut.arxiuAudio})}"
+                                       controls></audio>
+                            </div>
+
+                            <img th:case="'pelicula'"
+                                 th:src="@{/pelis/{f}(f=${contingut.imatge})}"
+                                 class="img-fluid rounded"
+                                 style="max-width: 300px;"
+                                 alt="Peli descoberta">
+                        </div>
 
                         <!-- Punts guanyats -->
-                        <div class="alert alert-success fs-4">
+                        <div class="alert alert-success fs-4 mt-3">
                             +<span th:text="${puntsGuanyats}">0</span> punts
                         </div>
 
                         <p class="fs-5">
-                            Puntuacio total:
-                            <strong th:text="${puntuacio}">0</strong>
+                            Puntuació total: <strong th:text="${puntuacio}">0</strong>
                         </p>
 
                         <!-- Botons -->
-                        <div class="mt-4">
+                        <div class="mt-4 d-flex gap-2 justify-content-center flex-wrap">
                             <a th:href="@{/seguent}" class="btn btn-primary btn-lg">
-                                Seguent animal
+                                Següent
                             </a>
-                            <a th:href="@{/reiniciar}" class="btn btn-outline-secondary">
+                            <a th:href="@{/}" class="btn btn-outline-secondary">
+                                Canviar de mode
+                            </a>
+                            <a th:href="@{/reiniciar}" class="btn btn-outline-danger">
                                 Reiniciar joc
                             </a>
                         </div>
