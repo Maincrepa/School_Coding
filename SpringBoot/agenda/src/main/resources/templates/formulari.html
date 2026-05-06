@@ -1,0 +1,54 @@
+<!-- src/main/resources/templates/formulari.html -->
+
+<!doctype html>
+<html lang="ca" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Contacte</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bg-light">
+    <div class="container py-5">
+      <h1
+        class="mb-4"
+        th:text="${contacte.id == null ? 'Nou contacte' : 'Editar contacte'}"
+      >
+        Nou contacte
+      </h1>
+
+      <!-- th:object lliga el formulari amb l'objecte 'contacte' del Model -->
+      <form
+        th:action="@{/guardar}"
+        th:object="${contacte}"
+        method="post"
+        class="card card-body shadow-sm"
+      >
+        <!-- Camp ocult: si estem editant, envia l'id existent -->
+        <input type="hidden" th:field="*{id}" />
+
+        <div class="mb-3">
+          <label class="form-label">Nom *</label>
+          <input type="text" th:field="*{nom}" class="form-control" required />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Telefon</label>
+          <input type="text" th:field="*{telefon}" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Email</label>
+          <input type="email" th:field="*{email}" class="form-control" />
+        </div>
+
+        <div class="d-flex gap-2">
+          <button type="submit" class="btn btn-success">Guardar</button>
+          <a th:href="@{/}" class="btn btn-secondary">Cancel·lar</a>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>
