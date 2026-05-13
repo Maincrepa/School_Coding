@@ -33,3 +33,21 @@ CREATE TABLE IF NOT EXISTS Pets (
     IdSpecie INTEGER NOT NULL, -- Foreign key a Species
     FOREIGN KEY (IdSpecie) REFERENCES Species(Code) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+-- TEST Insert 1. Species
+INSERT INTO Species (Type, Description, CareTip) VALUES 
+('Cat', 'Feline pet', 'Keep indoors, provide scratching posts'),
+('Dog', 'Canine pet', 'Regular exercise and socialization needed'),
+('Rabbit', 'Small and cute pet', 'Needs spacious hutch and daily greens');
+
+-- TEST Insert 2. Pets
+INSERT INTO Pets (Name, Gender, BirthDate, IdSpecie, Adoptat) VALUES 
+('Fluffy', 'F', '2022-03-15', 1, 0),
+('Rex', 'M', '2021-07-22', 2, 0),
+('Snowball', 'M', '2023-01-10', 1, 0),
+('Luna', 'F', '2020-11-05', 2, 1);
+
+-- TEST Insert 3. Adopters
+INSERT INTO Adopters (Name, Age, Tel, Email, Address) VALUES 
+('Joan Pujol', 35, '600123456', 'joan@email.com', 'Carrer Mayor 10, Barcelona'),
+('Maria Garcia', 28, '612456789', 'maria@email.com', 'Avinguda Diagonal 50, Barcelona');
