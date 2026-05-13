@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS Adopters (
 CREATE TABLE IF NOT EXISTS Species (
     Code INTEGER AUTO_INCREMENT PRIMARY KEY, 
     Type VARCHAR(50) NOT NULL, -- Type of species
-    Desc TEXT, -- Description
+    Description TEXT, -- Description
     CareTip TEXT -- Tip for care
 );
 
