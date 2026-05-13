@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class AdoptionService {
+    //TODO: getAllAnimals, addAnimal, updateAnimal, deleteAnimal
+
     /*
     public boolean canAdopt(Animal animal, User user) {
         // validation logic

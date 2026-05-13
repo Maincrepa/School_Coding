@@ -28,4 +28,14 @@ public class AdoptionController {
         model.addAttribute("animals", animalRepository.findAll());
         return "llista";  // src\main\resources\templates\llista.html
     }
+
+
+    /*
+    TODO:
+    GET /animals to list all animals.
+    POST /animals to add a new animal.
+    PUT /animals/{id} to update an animal.
+    DELETE /animals/{id} to delete an animal.
+
+    */
 }
