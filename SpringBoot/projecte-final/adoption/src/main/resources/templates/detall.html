@@ -17,9 +17,11 @@
         <div th:if="${admin and not edit}" class="d-flex gap-2">
             <a th:href="@{/animals/{id}(id=${animal.id}, admin=true, edit=true)}"
                class="btn btn-warning">Editar</a>
-            <form th:action="@{/animals/{id}/delete(id=${animal.id})}" method="post"
-                  th:onsubmit="'return confirm(\'Eliminar ' + ${animal.name} + '?\')'" >
-                <button type="submit" class="btn btn-danger">Eliminar</button>
+            <form th:action="@{/animals/{id}/delete(id=${animal.id})}" method="post">
+                <button type="submit"
+                        th:attr="data-name=${animal.name}"
+                        onclick="return confirm('Eliminar ' + this.dataset.name + '?')"
+                        class="btn btn-danger">Eliminar</button>
             </form>
         </div>
         <!-- Spacer when admin buttons are hidden -->
