@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ca" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${isNew ? 'Nou Animal' : animal.name + ' - Detall'}">Animal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container py-4">
+
+    <!-- Header bar -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <a th:href="@{/(admin=${admin})}" class="btn btn-outline-secondary">← Llista</a>
+        <h1 class="mb-0" th:text="${isNew ? 'Nou Animal' : animal.name}">Animal</h1>
+
+        <!-- Admin action buttons — only in view mode -->
+        <div th:if="${admin and not edit}" class="d-flex gap-2">
+            <a th:href="@{/animals/{id}(id=${animal.id}, admin=true, edit=true)}"
+               class="btn btn-warning">Editar</a>
+            <form th:action="@{/animals/{id}/delete(id=${animal.id})}" method="post"
+                  th:onsubmit="'return confirm(\'Eliminar ' + ${animal.name} + '?\')'" >
+                <button type="submit" class="btn btn-danger">Eliminar</button>
+            </form>
+        </div>
+        <!-- Spacer when admin buttons are hidden -->
+        <div th:unless="${admin and not edit}"></div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         VIEW MODE  (edit = false)
+         ═══════════════════════════════════════════ -->
+    <div th:if="${not edit}" class="card">
+        <div class="card-body">
+            <div class="row g-3">
+
+                <div class="col-md-6">
+                    <p class="mb-1"><span class="fw-bold">Nom:</span>
+                        <span th:text="${animal.name}"></span></p>
+                </div>
+                <div class="col-md-6">
+                    <p class="mb-1"><span class="fw-bold">Gènere:</span>
+                        <span th:text="${animal.gender}"></span></p>
+                </div>
+                <div class="col-md-6">
+                    <p class="mb-1"><span class="fw-bold">Data de naixement:</span>
+                        <span th:text="${animal.birthDate}"></span></p>
+                </div>
+                <div class="col-md-6">
+                    <p class="mb-1"><span class="fw-bold">Espècie (ID):</span>
+                        <span th:text="${animal.speciesId}"></span></p>
+                </div>
+                <div class="col-md-6">
+                    <p class="mb-1"><span class="fw-bold">Raça:</span>
+                        <span th:text="${animal.breed}"></span></p>
+                </div>
+                <div class="col-md-6">
+                    <p class="mb-1"><span class="fw-bold">Color:</span>
+                        <span th:text="${animal.color}"></span></p>
+                </div>
+                <div class="col-md-4">
+                    <p class="mb-1"><span class="fw-bold">Mida:</span>
+                        <span th:text="${animal.size}"></span></p>
+                </div>
+                <div class="col-md-4">
+                    <p class="mb-1"><span class="fw-bold">Pes:</span>
+                        <span th:text="${animal.weight}"></span> kg</p>
+                </div>
+                <div class="col-md-4">
+                    <p class="mb-1"><span class="fw-bold">Altura:</span>
+                        <span th:text="${animal.height}"></span> cm</p>
+                </div>
+                <div class="col-md-6">
+                    <p class="mb-1"><span class="fw-bold">Estat de salut:</span>
+                        <span th:text="${animal.healthStatus}"></span></p>
+                </div>
+                <div class="col-md-6">
+                    <p class="mb-1"><span class="fw-bold">Temperament:</span>
+                        <span th:text="${animal.temperament}"></span></p>
+                </div>
+                <div class="col-12">
+                    <p class="mb-1"><span class="fw-bold">Descripció:</span>
+                        <span th:text="${animal.description}"></span></p>
+                </div>
+
+                <!-- Boolean flags -->
+                <div class="col-md-4">
+                    <p class="mb-1"><span class="fw-bold">Esterilitzat:</span>
+                        <span th:text="${animal.isNeutered} ? 'Sí' : 'No'"></span></p>
+                </div>
+                <div class="col-md-4">
+                    <p class="mb-1"><span class="fw-bold">Vacunat:</span>
+                        <span th:text="${animal.isVaccinated} ? 'Sí' : 'No'"></span></p>
+                </div>
+                <div class="col-md-4">
+                    <p class="mb-1"><span class="fw-bold">Microxip:</span>
+                        <span th:text="${animal.isMicrochipped} ? 'Sí' : 'No'"></span></p>
+                </div>
+
+                <!-- Adoption -->
+                <div class="col-md-6">
+                    <p class="mb-1"><span class="fw-bold">Adoptat:</span>
+                        <span th:if="${animal.adopted}" class="badge bg-secondary">Sí</span>
+                        <span th:unless="${animal.adopted}" class="badge bg-success">No</span></p>
+                </div>
+                <div class="col-md-6" th:if="${animal.adopted}">
+                    <p class="mb-1"><span class="fw-bold">Data d'adopció:</span>
+                        <span th:text="${animal.adoptedDate}"></span></p>
+                </div>
+
+                <!-- Photo -->
+                <div class="col-12" th:if="${animal.photoUrl}">
+                    <p class="fw-bold mb-1">Foto:</p>
+                    <img th:src="${animal.photoUrl}" alt="Foto de l'animal"
+                         class="img-thumbnail" style="max-width:220px;">
+                </div>
+
+                <div class="col-md-6">
+                    <p class="mb-1"><span class="fw-bold">Registrat:</span>
+                        <span th:text="${animal.registeredDate}"></span></p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         EDIT / CREATE FORM MODE  (edit = true)
+         ═══════════════════════════════════════════ -->
+    <div th:if="${edit}">
+        <form th:action="${isNew ? '/animals' : '/animals/' + animal.id}"
+              th:object="${animal}" method="post">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row g-3">
+
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Nom *</label>
+                            <input type="text" class="form-control" th:field="*{name}" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Gènere *</label>
+                            <select class="form-select" th:field="*{gender}" required>
+                                <option value="">-- Selecciona --</option>
+                                <option value="M">Mascle</option>
+                                <option value="F">Femella</option>
+                                <option value="Altre">Altre</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Data de naixement</label>
+                            <input type="date" class="form-control" th:field="*{birthDate}">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Espècie (ID) *</label>
+                            <input type="number" class="form-control" th:field="*{speciesId}" required min="1">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Raça</label>
+                            <input type="text" class="form-control" th:field="*{breed}">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Color</label>
+                            <input type="text" class="form-control" th:field="*{color}">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold">Mida</label>
+                            <select class="form-select" th:field="*{size}">
+                                <option value="">-- Selecciona --</option>
+                                <option value="XS">XS</option>
+                                <option value="S">S</option>
+                                <option value="M">M</option>
+                                <option value="L">L</option>
+                                <option value="XL">XL</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold">Pes (kg)</label>
+                            <input type="number" step="0.01" class="form-control" th:field="*{weight}">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold">Altura (cm)</label>
+                            <input type="number" step="0.01" class="form-control" th:field="*{height}">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Estat de salut</label>
+                            <select class="form-select" th:field="*{healthStatus}">
+                                <option value="">-- Selecciona --</option>
+                                <option value="Healthy">Sa</option>
+                                <option value="NeedsAttention">Necessita atenció</option>
+                                <option value="UnderTreatment">En tractament</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Temperament</label>
+                            <input type="text" class="form-control" th:field="*{temperament}"
+                                   placeholder="ex: amigable, tímid">
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label fw-bold">Descripció</label>
+                            <textarea class="form-control" th:field="*{description}" rows="3"></textarea>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label fw-bold">URL de la foto</label>
+                            <input type="url" class="form-control" th:field="*{photoUrl}"
+                                   placeholder="https://...">
+                        </div>
+
+                        <!-- Boolean flags -->
+                        <div class="col-12">
+                            <div class="d-flex flex-wrap gap-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox"
+                                           th:field="*{isNeutered}" id="isNeutered">
+                                    <label class="form-check-label" for="isNeutered">Esterilitzat</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox"
+                                           th:field="*{isVaccinated}" id="isVaccinated">
+                                    <label class="form-check-label" for="isVaccinated">Vacunat</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox"
+                                           th:field="*{isMicrochipped}" id="isMicrochipped">
+                                    <label class="form-check-label" for="isMicrochipped">Microxip</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox"
+                                           th:field="*{adopted}" id="adopted">
+                                    <label class="form-check-label" for="adopted">Adoptat</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Data d'adopció</label>
+                            <input type="date" class="form-control" th:field="*{adoptedDate}">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">ID Adoptant</label>
+                            <input type="number" class="form-control" th:field="*{adopterId}" min="1">
+                        </div>
+
+                    </div>
+                </div>
+                <div class="card-footer d-flex gap-2">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <a th:href="${isNew} ? @{/(admin=true)} : @{/animals/{id}(id=${animal.id}, admin=true)}"
+                       class="btn btn-secondary">Cancel·lar</a>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>
+</body>
+</html>
