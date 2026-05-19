@@ -2,6 +2,7 @@ package com.example.adoption.model;
 
 // Framework
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
 // Java
@@ -26,7 +27,8 @@ public class Animal {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate birthDate;
 
-    @Column(name = "IdSpecie")
+    @NotNull(message = "Species ID is required")
+    @Column(name = "IdSpecie", nullable = false)
     private Integer speciesId;
 
     @Column(name = "Adoptat")
