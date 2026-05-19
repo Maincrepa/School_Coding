@@ -48,8 +48,11 @@
                         <span th:text="${animal.birthDate}"></span></p>
                 </div>
                 <div class="col-md-6">
-                    <p class="mb-1"><span class="fw-bold">Espècie (ID):</span>
-                        <span th:text="${animal.speciesId}"></span></p>
+                    <label class="form-label fw-bold">Espècie *</label>
+                    <select class="form-select" th:field="*{speciesId}" required>
+                        <option value="">-- Selecciona espècie --</option>
+                        <option th:each="sp : ${species}" th:value="${sp.id}" th:text="${sp.id} + ' - ' + ${sp.name}"></option>
+                    </select>
                 </div>
                 <div class="col-md-6">
                     <p class="mb-1"><span class="fw-bold">Raça:</span>
@@ -153,8 +156,11 @@
                             <input type="date" class="form-control" th:field="*{birthDate}">
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label fw-bold">Espècie (ID) *</label>
-                            <input type="number" class="form-control" th:field="*{speciesId}" required min="1">
+                            <label class="form-label fw-bold">Espècie *</label>
+                            <select class="form-select" th:field="*{speciesId}" required>
+                                <option value="">-- Selecciona espècie --</option>
+                                <option th:each="sp : ${species}" th:value="${sp.id}" th:text="${sp.id} + ' - ' + ${sp.name}"></option>
+                            </select>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label fw-bold">Raça</label>

@@ -2,7 +2,9 @@ package com.example.adoption.services;
 
 // Package
 import com.example.adoption.model.Animal;
+import com.example.adoption.model.Species;
 import com.example.adoption.repository.AnimalRepository;
+import com.example.adoption.repository.SpeciesRepository;
 
 // Framework
 import org.springframework.stereotype.Service;
@@ -16,9 +18,15 @@ import java.util.Optional;
 @Service
 public class AdoptionService {
     private final AnimalRepository animalRepository;
+    private final SpeciesRepository speciesRepository;
 
-    AdoptionService(AnimalRepository animalRepository) {
+    AdoptionService(AnimalRepository animalRepository, SpeciesRepository speciesRepository) {
         this.animalRepository = animalRepository;
+        this.speciesRepository = speciesRepository;
+    }
+
+    public List<Species> getAllSpecies() {
+        return speciesRepository.findAll();
     }
 
     public List<Animal> getAllAnimals() {

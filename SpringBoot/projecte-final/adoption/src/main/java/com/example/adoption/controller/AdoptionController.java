@@ -33,6 +33,7 @@ public class AdoptionController {
     // Declared before /animals/{id} so Spring matches "new" literally, not as a path variable
     @GetMapping("/animals/new")
     public String newAnimal(@RequestParam(defaultValue = "false") Boolean admin, Model model) {
+        model.addAttribute("species", adoptionService.getAllSpecies());
         model.addAttribute("animal", new Animal());
         model.addAttribute("admin", admin);
         model.addAttribute("edit", true);
@@ -46,6 +47,7 @@ public class AdoptionController {
                                @RequestParam(defaultValue = "false") Boolean edit,
                                Model model) {
         Animal animal = adoptionService.findById(id).orElseThrow();
+        model.addAttribute("species", adoptionService.getAllSpecies());
         model.addAttribute("animal", animal);
         model.addAttribute("admin", admin);
         model.addAttribute("edit", edit);
