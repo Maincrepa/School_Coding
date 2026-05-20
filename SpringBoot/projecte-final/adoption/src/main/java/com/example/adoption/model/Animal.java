@@ -4,6 +4,7 @@ package com.example.adoption.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 // Java
 import java.math.BigDecimal;
@@ -30,6 +31,11 @@ public class Animal {
     @NotNull(message = "Species ID is required")
     @Column(name = "IdSpecie", nullable = false)
     private Integer speciesId;
+
+    @ManyToOne
+    @JoinColumn(name = "IdSpecie", insertable = false, updatable = false)
+    @JsonIgnoreProperties("hibernateLazyInitializer")
+    private Species species;
 
     @Column(name = "Adoptat")
     private Boolean adopted;
@@ -86,6 +92,7 @@ public class Animal {
     public void setGender(String newGender) { gender = newGender; }
     public void setBirthDate(LocalDate newBirthDate) { birthDate = newBirthDate; }
     public void setSpeciesId(Integer newSpeciesId) { speciesId = newSpeciesId; }
+    public void setSpecies(Species newSpecies) { species = newSpecies; }
     public void setAdopted(Boolean newAdopted) { adopted = newAdopted; }
     public void setAdoptedDate(LocalDate newAdoptedDate) { adoptedDate = newAdoptedDate; }
     public void setRegisteredDate(LocalDateTime newRegisteredDate) { registeredDate = newRegisteredDate; }
@@ -109,6 +116,7 @@ public class Animal {
     public String getGender() { return gender; }
     public LocalDate getBirthDate() { return birthDate; }
     public Integer getSpeciesId() { return speciesId; }
+    public Species getSpecies() { return species; }
     public Boolean getAdopted() { return adopted; }
     public LocalDate getAdoptedDate() { return adoptedDate; }
     public LocalDateTime getRegisteredDate() { return registeredDate; }

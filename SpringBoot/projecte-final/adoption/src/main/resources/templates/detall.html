@@ -48,11 +48,8 @@
                         <span th:text="${animal.birthDate}"></span></p>
                 </div>
                 <div class="col-md-6">
-                    <label class="form-label fw-bold">Espècie *</label>
-                    <select class="form-select" th:field="*{speciesId}" required>
-                        <option value="">-- Selecciona espècie --</option>
-                        <option th:each="sp : ${species}" th:value="${sp.id}" th:text="${sp.id} + ' - ' + ${sp.name}"></option>
-                    </select>
+                    <p class="mb-1"><span class="fw-bold">Espècie:</span>
+                        <span th:text="${animal.species?.name}"></span></p>
                 </div>
                 <div class="col-md-6">
                     <p class="mb-1"><span class="fw-bold">Raça:</span>
