@@ -1,15 +1,23 @@
 package com.example.adoption.model;
 
 // Framework
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-// Java
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "Pets")
@@ -83,9 +91,6 @@ public class Animal {
     @Column(name = "PhotoURL")
     private String photoUrl;
 
-    @Column(name = "AdopterID")
-    private Integer adopterId;
-
     // Setters
     public void setId(Long newId) { id = newId; }
     public void setName(String newName) { name = newName; }
@@ -108,7 +113,6 @@ public class Animal {
     public void setTemperament(String newTemperament) { temperament = newTemperament; }
     public void setDescription(String newDescription) { description = newDescription; }
     public void setPhotoUrl(String newPhotoUrl) { photoUrl = newPhotoUrl; }
-    public void setAdopterId(Integer newAdopterId) { adopterId = newAdopterId; }
 
     // Getters
     public Long getId() { return id; }
@@ -132,5 +136,4 @@ public class Animal {
     public String getTemperament() { return temperament; }
     public String getDescription() { return description; }
     public String getPhotoUrl() { return photoUrl; }
-    public Integer getAdopterId() { return adopterId; }
 }
