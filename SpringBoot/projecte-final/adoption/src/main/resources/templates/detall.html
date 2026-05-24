@@ -151,6 +151,85 @@
             </form>
         </div>
 
+        <!-- Species Information Frame -->
+        <div th:if="${animal.species}" class="card mt-4 border-info">
+            <div class="card-header bg-info text-white">
+                <h5 class="mb-0">
+                    <i class="bi bi-info-circle me-2"></i>
+                    Informació sobre la seva espècie: <strong th:text="${animal.species.name}"></strong>
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row g-4">
+                    <!-- Left column: Description & Care Tip -->
+                    <div class="col-md-6">
+                        <div th:if="${animal.species.description}">
+                            <h6 class="text-muted text-uppercase fw-bold mb-2">
+                                <i class="bi bi-book me-2"></i>Descripció
+                            </h6>
+                            <p th:text="${animal.species.description}" class="mb-3"></p>
+                        </div>
+                        <div th:if="${animal.species.careTip}">
+                            <h6 class="text-muted text-uppercase fw-bold mb-2">
+                                <i class="bi bi-lightbulb me-2"></i>Consell de Cuidado
+                            </h6>
+                            <p th:text="${animal.species.careTip}" class="mb-0 text-secondary"></p>
+                        </div>
+                    </div>
+
+                    <!-- Right column: Characteristics -->
+                    <div class="col-md-6">
+                        <div class="vstack gap-2">
+                            <div class="d-flex align-items-center gap-2 py-2 border-bottom" 
+                                 th:if="${animal.species.averageLifespan}">
+                                <i class="bi bi-hourglass-split text-primary" style="font-size:1.2rem"></i>
+                                <span class="text-muted" style="width:140px">Esperança de vida:</span>
+                                <span class="fw-semibold" th:text="${animal.species.averageLifespan} + ' anys'"></span>
+                            </div>
+                            <div class="d-flex align-items-center gap-2 py-2 border-bottom" 
+                                 th:if="${animal.species.averageWeight}">
+                                <i class="bi bi-weight text-primary" style="font-size:1.2rem"></i>
+                                <span class="text-muted" style="width:140px">Pes mitjà:</span>
+                                <span class="fw-semibold" th:text="${animal.species.averageWeight} + ' kg'"></span>
+                            </div>
+                            <div class="d-flex align-items-center gap-2 py-2 border-bottom" 
+                                 th:if="${animal.species.sizeCategory}">
+                                <i class="bi bi-rulers text-primary" style="font-size:1.2rem"></i>
+                                <span class="text-muted" style="width:140px">Mida típica:</span>
+                                <span class="fw-semibold" th:text="${animal.species.sizeCategory}"></span>
+                            </div>
+                            <div class="d-flex align-items-center gap-2 py-2 border-bottom" 
+                                 th:if="${animal.species.activityLevel}">
+                                <i class="bi bi-lightning-charge text-primary" style="font-size:1.2rem"></i>
+                                <span class="text-muted" style="width:140px">Nivell d'activitat:</span>
+                                <span class="fw-semibold" th:text="${animal.species.activityLevel}"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Compatibility Badges -->
+                <div class="d-flex flex-wrap gap-2 mt-4 pt-3 border-top">
+                    <span th:if="${animal.species.isHypoallergenic}" 
+                          class="badge bg-success rounded-pill">
+                        <i class="bi bi-check-circle me-1"></i>Hipoal·lergènic
+                    </span>
+                    <span th:unless="${animal.species.isHypoallergenic}" 
+                          class="badge bg-secondary rounded-pill">
+                        <i class="bi bi-x-circle me-1"></i>Pot causar al·lèrgies
+                    </span>
+                    <span th:if="${animal.species.isGoodWithChildren}" 
+                          class="badge bg-success rounded-pill">
+                        <i class="bi bi-check-circle me-1"></i>Bona amb nens
+                    </span>
+                    <span th:unless="${animal.species.isGoodWithChildren}" 
+                          class="badge bg-warning rounded-pill">
+                        <i class="bi bi-exclamation-circle me-1"></i>Requereix supervisió amb nens
+                    </span>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <!-- ═══════════════════════════════════════════
