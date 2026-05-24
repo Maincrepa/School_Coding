@@ -142,8 +142,7 @@
         <div th:unless="${animal.adopted}" class="alert alert-info d-flex justify-content-between align-items-center">
             <span>
                 <i class="bi bi-clock me-1"></i>
-                Disponible per adopció des de
-                <strong th:text="${animal.registeredDate != null ? #temporals.format(animal.registeredDate, 'dd/MM/yyyy') : '-'}"></strong>
+                Disponible per l'adopció
             </span>
             <form th:action="@{/animals/{id}/adopt(id=${animal.id})}" method="post" class="mb-0">
                 <button type="submit" class="btn btn-success">
