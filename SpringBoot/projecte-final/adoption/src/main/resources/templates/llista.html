@@ -4,49 +4,223 @@
     <meta charset="UTF-8">
     <title>Animals - Adopció</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <style>
+        .animal-card-img {
+            height: 200px;
+            object-fit: cover;
+            width: 100%;
+        }
+        .animal-card-img-placeholder {
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f0f0f0;
+        }
+        .list-img {
+            width: 72px;
+            height: 72px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .list-img-placeholder {
+            width: 72px;
+            height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f0f0f0;
+            border-radius: 8px;
+        }
+        #view-grid .animal-card { transition: transform .15s, box-shadow .15s; }
+        #view-grid .animal-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,.12); }
+    </style>
 </head>
-<body>
+<body style="display:flex;flex-direction:column;min-height:100vh;">
+
+<div th:replace="~{fragments :: header}"></div>
+
+<main style="flex:1;">
 <div class="container py-4">
 
-    <div class="d-flex justify-content-between align-items-center mb-4">
+    <!-- ── Toolbar ── -->
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-2">
         <h1 class="mb-0">Animals disponibles</h1>
-        <a th:if="${admin}" th:href="@{/animals/new(admin=true)}" class="btn btn-success">+ Nou animal</a>
+        <div class="d-flex align-items-center gap-2">
+            <!-- View toggle -->
+            <div class="btn-group" role="group" aria-label="Vista">
+                <button id="btn-grid" type="button" class="btn btn-outline-secondary active"
+                        onclick="setView('grid')" title="Vista en quadrícula">
+                    <i class="bi bi-grid-3x3-gap-fill"></i>
+                </button>
+                <button id="btn-list" type="button" class="btn btn-outline-secondary"
+                        onclick="setView('list')" title="Vista en llista">
+                    <i class="bi bi-list-ul"></i>
+                </button>
+            </div>
+            <a th:if="${admin}" th:href="@{/animals/new(admin=true)}" class="btn btn-success">
+                <i class="bi bi-plus-lg me-1"></i>Nou animal
+            </a>
+        </div>
     </div>
 
     <div th:if="${#lists.isEmpty(animals)}" class="alert alert-info">
         No hi ha animals registrats.
     </div>
 
-    <table th:unless="${#lists.isEmpty(animals)}" class="table table-bordered table-hover align-middle">
-        <thead class="table-dark">
-            <tr>
-                <th>#</th>
-                <th>Nom</th>
-                <th>Gènere</th>
-                <th>Raça</th>
-                <th>Estat de salut</th>
-                <th>Estat</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="animal : ${animals}">
-                <td th:text="${animal.id}"></td>
-                <td th:text="${animal.name}"></td>
-                <td th:text="${animal.gender}"></td>
-                <td th:text="${animal.breed}"></td>
-                <td th:text="${animal.healthStatus}"></td>
-                <td>
-                    <span th:if="${animal.adopted}" class="badge bg-secondary">Adoptat</span>
-                    <span th:unless="${animal.adopted}" class="badge bg-success">Disponible</span>
-                </td>
-                <td>
-                    <a th:href="@{/animals/{id}(id=${animal.id}, admin=${admin})}" class="btn btn-sm btn-primary">Veure</a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <div th:unless="${#lists.isEmpty(animals)}">
+
+        <!-- ══════════════════════════════════════════
+             GRID VIEW
+             ══════════════════════════════════════════ -->
+        <div id="view-grid" class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 g-4">
+            <div class="col" th:each="animal : ${animals}">
+                <div class="card h-100 shadow-sm animal-card">
+
+                    <!-- Photo -->
+                    <div th:if="${animal.photoUrl}">
+                        <img th:src="${animal.photoUrl}" class="animal-card-img card-img-top"
+                             th:alt="${animal.name}">
+                    </div>
+                    <div th:unless="${animal.photoUrl}" class="animal-card-img-placeholder">
+                        <i class="bi bi-image text-muted" style="font-size:3rem"></i>
+                    </div>
+
+                    <!-- Status ribbon -->
+                    <div class="position-relative">
+                        <span th:if="${animal.adopted}"
+                              class="badge bg-secondary position-absolute top-0 end-0 m-2">Adoptat</span>
+                        <span th:unless="${animal.adopted}"
+                              class="badge bg-success position-absolute top-0 end-0 m-2">Disponible</span>
+                    </div>
+
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title mb-1" th:text="${animal.name}">Nom</h5>
+
+                        <!-- Species -->
+                        <p class="text-muted small mb-2">
+                            <i class="bi bi-tag me-1"></i>
+                            <span th:text="${animal.species?.name ?: '—'}">Espècie</span>
+                        </p>
+
+                        <ul class="list-unstyled small mb-3 flex-grow-1">
+                            <!-- Breed -->
+                            <li class="mb-1">
+                                <i class="bi bi-pentagon me-1 text-secondary"></i>
+                                <strong>Raça:</strong>
+                                <span th:text="${animal.breed ?: '—'}"></span>
+                            </li>
+                            <!-- Birth date -->
+                            <li class="mb-1">
+                                <i class="bi bi-calendar3 me-1 text-secondary"></i>
+                                <strong>Naixement:</strong>
+                                <span th:text="${animal.birthDate != null ? #temporals.format(animal.birthDate, 'dd/MM/yyyy') : '—'}"></span>
+                            </li>
+                            <!-- Gender -->
+                            <li>
+                                <i class="bi bi-gender-ambiguous me-1 text-secondary"></i>
+                                <strong>Gènere:</strong>
+                                <span th:text="${animal.gender ?: '—'}"></span>
+                            </li>
+                        </ul>
+
+                        <a th:href="@{/animals/{id}(id=${animal.id}, admin=${admin})}"
+                           class="btn btn-primary btn-sm mt-auto w-100">
+                            <i class="bi bi-eye me-1"></i>Veure detall
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ══════════════════════════════════════════
+             LIST VIEW
+             ══════════════════════════════════════════ -->
+        <div id="view-list" class="d-none">
+            <div class="card shadow-sm" th:each="animal : ${animals}">
+                <div class="card-body">
+                    <div class="d-flex align-items-center gap-3">
+
+                        <!-- Thumbnail -->
+                        <div th:if="${animal.photoUrl}">
+                            <img th:src="${animal.photoUrl}" class="list-img flex-shrink-0"
+                                 th:alt="${animal.name}">
+                        </div>
+                        <div th:unless="${animal.photoUrl}" class="list-img-placeholder flex-shrink-0">
+                            <i class="bi bi-image text-muted fs-4"></i>
+                        </div>
+
+                        <!-- Info -->
+                        <div class="flex-grow-1 min-w-0">
+                            <div class="d-flex align-items-center gap-2 mb-1">
+                                <h5 class="mb-0 text-truncate" th:text="${animal.name}">Nom</h5>
+                                <span th:if="${animal.adopted}" class="badge bg-secondary flex-shrink-0">Adoptat</span>
+                                <span th:unless="${animal.adopted}" class="badge bg-success flex-shrink-0">Disponible</span>
+                            </div>
+                            <div class="row row-cols-2 row-cols-md-4 g-1 small text-muted">
+                                <div class="col">
+                                    <i class="bi bi-tag me-1"></i>
+                                    <span th:text="${animal.species?.name ?: '—'}">Espècie</span>
+                                </div>
+                                <div class="col">
+                                    <i class="bi bi-pentagon me-1"></i>
+                                    <span th:text="${animal.breed ?: '—'}">Raça</span>
+                                </div>
+                                <div class="col">
+                                    <i class="bi bi-calendar3 me-1"></i>
+                                    <span th:text="${animal.birthDate != null ? #temporals.format(animal.birthDate, 'dd/MM/yyyy') : '—'}">Naixement</span>
+                                </div>
+                                <div class="col">
+                                    <i class="bi bi-gender-ambiguous me-1"></i>
+                                    <span th:text="${animal.gender ?: '—'}">Gènere</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Action -->
+                        <a th:href="@{/animals/{id}(id=${animal.id}, admin=${admin})}"
+                           class="btn btn-primary btn-sm flex-shrink-0">
+                            <i class="bi bi-eye me-1"></i>Veure
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div><!-- /th:unless -->
 
 </div>
+</main>
+
+<div th:replace="~{fragments :: footer}"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    function setView(mode) {
+        const grid = document.getElementById('view-grid');
+        const list = document.getElementById('view-list');
+        const btnGrid = document.getElementById('btn-grid');
+        const btnList = document.getElementById('btn-list');
+        if (mode === 'grid') {
+            grid.classList.remove('d-none');
+            list.classList.add('d-none');
+            btnGrid.classList.add('active');
+            btnList.classList.remove('active');
+        } else {
+            grid.classList.add('d-none');
+            list.classList.remove('d-none');
+            btnList.classList.add('active');
+            btnGrid.classList.remove('active');
+        }
+        localStorage.setItem('animalView', mode);
+    }
+
+    // Restore preference on load
+    (function () {
+        const saved = localStorage.getItem('animalView');
+        if (saved === 'list') setView('list');
+    })();
+</script>
 </body>
 </html>

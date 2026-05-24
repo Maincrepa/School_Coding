@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ca" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<!-- ═══════════════════════════════════════════
+     HEADER FRAGMENT
+     ═══════════════════════════════════════════ -->
+<header th:fragment="header">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+        <div class="container">
+            <!-- Brand / Logo -->
+            <a class="navbar-brand d-flex align-items-center gap-2" th:href="@{/}">
+                <img th:src="@{/icons/placeholder.png}"
+                     src="/icons/placeholder.png"
+                     width="40" height="40"
+                     style="object-fit:contain;border-radius:6px;"
+                     alt="Logo">
+                <span class="fw-bold fs-5">AdoptWeb</span>
+            </a>
+
+            <!-- Toggler for mobile -->
+            <button class="navbar-toggler" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#navbarMain"
+                    aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Nav links -->
+            <div class="collapse navbar-collapse" id="navbarMain">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/}">Animals</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#">Sobre nosaltres</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#">Contacte</a>
+                    </li>
+                </ul>
+                <span class="navbar-text text-white-50 fst-italic small">
+                    Plataforma d'Adopció d'Animals
+                </span>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<!-- ═══════════════════════════════════════════
+     FOOTER FRAGMENT
+     ═══════════════════════════════════════════ -->
+<footer th:fragment="footer" class="bg-dark text-white py-4">
+    <div class="container">
+        <div class="row g-4">
+
+            <!-- Column 1: Brand -->
+            <div class="col-md-4">
+                <div class="d-flex align-items-center gap-2 mb-2">
+                    <img th:src="@{/icons/placeholder.png}"
+                         src="/icons/placeholder.png"
+                         width="32" height="32"
+                         style="object-fit:contain;border-radius:4px;"
+                         alt="Logo">
+                    <span class="fw-bold fs-6">AdoptWeb</span>
+                </div>
+                <p class="text-white-50 small mb-0">
+                    La nostra missió és trobar una llar per a cada animal.
+                </p>
+            </div>
+
+            <!-- Column 2: Quick links -->
+            <div class="col-md-4">
+                <h6 class="fw-bold text-white-50 text-uppercase mb-3">Navegació</h6>
+                <ul class="list-unstyled small">
+                    <li><a th:href="@{/}" href="/" class="text-white-50 text-decoration-none">Animals disponibles</a></li>
+                    <li><a href="#" class="text-white-50 text-decoration-none">Sobre nosaltres</a></li>
+                    <li><a href="#" class="text-white-50 text-decoration-none">Contacte</a></li>
+                    <li><a href="#" class="text-white-50 text-decoration-none">Política de privacitat</a></li>
+                </ul>
+            </div>
+
+            <!-- Column 3: Contact -->
+            <div class="col-md-4">
+                <h6 class="fw-bold text-white-50 text-uppercase mb-3">Contacte</h6>
+                <ul class="list-unstyled small text-white-50">
+                    <li class="mb-1">
+                        <i class="bi bi-geo-alt me-2"></i>Carrer Placeholder, 123, Ciutat
+                    </li>
+                    <li class="mb-1">
+                        <i class="bi bi-telephone me-2"></i>+34 000 000 000
+                    </li>
+                    <li>
+                        <i class="bi bi-envelope me-2"></i>info@adoptweb.cat
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
+        <hr class="border-secondary mt-4 mb-3">
+        <p class="text-white-50 small text-center mb-0">
+            &copy; <span th:text="${#dates.year(#dates.createNow())}">2026</span>
+            AdoptWeb · Tots els drets reservats
+        </p>
+    </div>
+</footer>
+
+</body>
+</html>
