@@ -11,6 +11,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import java.beans.PropertyEditorSupport;
+import java.time.LocalDate;
+import java.time.Period;
 import jakarta.validation.Valid;
 
 // Handles routes, processes requests, sends to view
@@ -47,12 +49,24 @@ public class AdoptionController {
                                @RequestParam(defaultValue = "false") Boolean edit,
                                Model model) {
         Animal animal = adoptionService.findById(id).orElseThrow();
+        if (animal.getBirthDate() != null) {
+            model.addAttribute("ageYears", Period.between(animal.getBirthDate(), LocalDate.now()).getYears());
+        }
         model.addAttribute("species", adoptionService.getAllSpecies());
         model.addAttribute("animal", animal);
         model.addAttribute("admin", admin);
         model.addAttribute("edit", edit);
         model.addAttribute("isNew", false);
         return "detall";
+    }
+
+    @PostMapping("/animals/{id}/adopt")
+    public String adoptAnimal(@PathVariable Long id) {
+        Animal animal = adoptionService.findById(id).orElseThrow();
+        animal.setAdopted(true);
+        animal.setAdoptedDate(LocalDate.now());
+        adoptionService.save(animal);
+        return "redirect:/animals/" + id;
     }
 
     @PostMapping("/animals")
