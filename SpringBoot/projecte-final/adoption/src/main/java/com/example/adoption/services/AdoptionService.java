@@ -1,17 +1,15 @@
 package com.example.adoption.services;
 
 // Package
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.stereotype.Service;
+
 import com.example.adoption.model.Animal;
 import com.example.adoption.model.Species;
 import com.example.adoption.repository.AnimalRepository;
 import com.example.adoption.repository.SpeciesRepository;
-
-// Framework
-import org.springframework.stereotype.Service;
-
-// Java
-import java.util.List;
-import java.util.Optional;
 
 // Contains business logic, called by controller
 
@@ -27,6 +25,10 @@ public class AdoptionService {
 
     public List<Species> getAllSpecies() {
         return speciesRepository.findAll();
+    }
+
+    public Optional<Species> findSpeciesById(Integer id) {
+        return speciesRepository.findById(id);
     }
 
     public List<Animal> getAllAnimals() {

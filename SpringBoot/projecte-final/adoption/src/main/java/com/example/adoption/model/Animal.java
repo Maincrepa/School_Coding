@@ -5,6 +5,8 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -17,6 +19,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
@@ -36,12 +39,13 @@ public class Animal {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate birthDate;
 
-    @NotNull(message = "Species ID is required")
-    @Column(name = "IdSpecie", nullable = false)
+    @Transient
+    @NotNull(message = "Species is required")
     private Integer speciesId;
 
     @ManyToOne
-    @JoinColumn(name = "IdSpecie", insertable = false, updatable = false)
+    @JoinColumn(name = "IdSpecie")
+    @NotFound(action = NotFoundAction.IGNORE)
     @JsonIgnoreProperties("hibernateLazyInitializer")
     private Species species;
 
@@ -96,7 +100,7 @@ public class Animal {
     public void setName(String newName) { name = newName; }
     public void setGender(String newGender) { gender = newGender; }
     public void setBirthDate(LocalDate newBirthDate) { birthDate = newBirthDate; }
-    public void setSpeciesId(Integer newSpeciesId) { speciesId = newSpeciesId; }
+    public void setSpeciesId(Integer newSpeciesId) { this.speciesId = newSpeciesId; }
     public void setSpecies(Species newSpecies) { species = newSpecies; }
     public void setAdopted(Boolean newAdopted) { adopted = newAdopted; }
     public void setAdoptedDate(LocalDate newAdoptedDate) { adoptedDate = newAdoptedDate; }
@@ -119,7 +123,10 @@ public class Animal {
     public String getName() { return name; }
     public String getGender() { return gender; }
     public LocalDate getBirthDate() { return birthDate; }
-    public Integer getSpeciesId() { return speciesId; }
+    public Integer getSpeciesId() {
+        if (speciesId != null) return speciesId;
+        return species != null ? species.getId() : null;
+    }
     public Species getSpecies() { return species; }
     public Boolean getAdopted() { return adopted; }
     public LocalDate getAdoptedDate() { return adoptedDate; }

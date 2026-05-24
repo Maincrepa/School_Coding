@@ -1,18 +1,25 @@
 package com.example.adoption.controller;
 
 // Package
-import com.example.adoption.model.Animal;
-import com.example.adoption.services.AdoptionService;
+import java.beans.PropertyEditorSupport;
+import java.time.LocalDate;
+import java.time.Period;
 
-// Framework
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
-import java.beans.PropertyEditorSupport;
-import java.time.LocalDate;
-import java.time.Period;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.example.adoption.model.Animal;
+import com.example.adoption.services.AdoptionService;
+
 import jakarta.validation.Valid;
 
 // Handles routes, processes requests, sends to view
@@ -72,10 +79,15 @@ public class AdoptionController {
     @PostMapping("/animals")
     public String createAnimal(@Valid @ModelAttribute Animal animal, 
                             BindingResult result, Model model) {
+        // Resolve the Species entity from the submitted ID so the @ManyToOne is set
+        if (animal.getSpeciesId() != null) {
+            adoptionService.findSpeciesById(animal.getSpeciesId()).ifPresent(animal::setSpecies);
+        }
         if (result.hasErrors()) {
+            model.addAttribute("species", adoptionService.getAllSpecies());
             model.addAttribute("admin", true);
             model.addAttribute("isNew", true);
-            return "detall"; // Show form again with error messages
+            return "detall";
         }
         adoptionService.save(animal);
         return "redirect:/";
@@ -84,6 +96,9 @@ public class AdoptionController {
     @PostMapping("/animals/{id}")
     public String updateAnimal(@PathVariable Long id, @ModelAttribute Animal animal) {
         animal.setId(id);
+        if (animal.getSpeciesId() != null) {
+            adoptionService.findSpeciesById(animal.getSpeciesId()).ifPresent(animal::setSpecies);
+        }
         adoptionService.save(animal);
         return "redirect:/animals/" + id;
     }
@@ -97,6 +112,9 @@ public class AdoptionController {
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {
+        // Convert empty strings to null so optional ENUM columns (HealthStatus, Size, etc.)
+        // receive null instead of "", which MySQL rejects as an invalid ENUM value
+        binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
         binder.registerCustomEditor(Integer.class, new PropertyEditorSupport() {
             @Override
             public void setAsText(String text) throws IllegalArgumentException {
