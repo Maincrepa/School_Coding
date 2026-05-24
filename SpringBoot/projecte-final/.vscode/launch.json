@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-AdoptionApplication<adoption>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.example.adoption.AdoptionApplication",
+            "projectName": "adoption",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
