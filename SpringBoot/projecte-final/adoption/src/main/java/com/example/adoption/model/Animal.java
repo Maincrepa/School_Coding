@@ -40,12 +40,12 @@ public class Animal {
     private LocalDate birthDate;
 
     @Transient
-    @NotNull(message = "Species is required")
     private Integer speciesId;
 
     @ManyToOne
     @JoinColumn(name = "IdSpecie")
     @NotFound(action = NotFoundAction.IGNORE)
+    @NotNull(message = "Species is required")
     @JsonIgnoreProperties("hibernateLazyInitializer")
     private Species species;
 

@@ -20,8 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.example.adoption.model.Animal;
 import com.example.adoption.services.AdoptionService;
 
-import jakarta.validation.Valid;
-
 // Handles routes, processes requests, sends to view
 
 @Controller
@@ -77,11 +75,14 @@ public class AdoptionController {
     }
 
     @PostMapping("/animals")
-    public String createAnimal(@Valid @ModelAttribute Animal animal, 
+    public String createAnimal(@ModelAttribute Animal animal, 
                             BindingResult result, Model model) {
-        // Resolve the Species entity from the submitted ID so the @ManyToOne is set
+        // Resolve the Species entity first so @NotNull on species is satisfied before save
         if (animal.getSpeciesId() != null) {
             adoptionService.findSpeciesById(animal.getSpeciesId()).ifPresent(animal::setSpecies);
+        }
+        if (animal.getSpecies() == null) {
+            result.rejectValue("speciesId", "required", "Species is required");
         }
         if (result.hasErrors()) {
             model.addAttribute("species", adoptionService.getAllSpecies());
