@@ -24,26 +24,50 @@ public class AdoptionService {
     }
 
     public List<Species> getAllSpecies() {
-        return speciesRepository.findAll();
+        try {
+            return speciesRepository.findAll();
+        } catch (Exception e) {
+            throw new RuntimeException("Error retrieving species list", e);
+        }
     }
 
     public Optional<Species> findSpeciesById(Integer id) {
-        return speciesRepository.findById(id);
+        try {
+            return speciesRepository.findById(id);
+        } catch (Exception e) {
+            throw new RuntimeException("Error finding species with id: " + id, e);
+        }
     }
 
     public List<Animal> getAllAnimals() {
-        return animalRepository.findAll();
+        try {
+            return animalRepository.findAll();
+        } catch (Exception e) {
+            throw new RuntimeException("Error retrieving animal list", e);
+        }
     }
 
     public Optional<Animal> findById(Long id) {
-        return animalRepository.findById(id);
+        try {
+            return animalRepository.findById(id);
+        } catch (Exception e) {
+            throw new RuntimeException("Error finding animal with id: " + id, e);
+        }
     }
 
     public Animal save(Animal animal) {
-        return animalRepository.save(animal);
+        try {
+            return animalRepository.save(animal);
+        } catch (Exception e) {
+            throw new RuntimeException("Error saving animal", e);
+        }
     }
 
     public void delete(Long id) {
-        animalRepository.deleteById(id);
+        try {
+            animalRepository.deleteById(id);
+        } catch (Exception e) {
+            throw new RuntimeException("Error deleting animal with id: " + id, e);
+        }
     }
 }

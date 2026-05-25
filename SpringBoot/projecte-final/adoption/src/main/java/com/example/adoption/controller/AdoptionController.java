@@ -4,6 +4,7 @@ package com.example.adoption.controller;
 import java.beans.PropertyEditorSupport;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.NoSuchElementException;
 
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
@@ -32,9 +33,14 @@ public class AdoptionController {
 
     @GetMapping("/")
     public String listAnimals(@RequestParam(defaultValue = "false") Boolean admin, Model model) {
-        model.addAttribute("animals", adoptionService.getAllAnimals());
-        model.addAttribute("admin", admin);
-        return "llista";
+        try {
+            model.addAttribute("animals", adoptionService.getAllAnimals());
+            model.addAttribute("admin", admin);
+            return "llista";
+        } catch (Exception e) {
+            model.addAttribute("error", "Could not load animals: " + e.getMessage());
+            return "llista";
+        }
     }
 
     // Declared before /animals/{id} so Spring matches "new" literally, not as a path variable
@@ -53,25 +59,38 @@ public class AdoptionController {
                                @RequestParam(defaultValue = "false") Boolean admin,
                                @RequestParam(defaultValue = "false") Boolean edit,
                                Model model) {
-        Animal animal = adoptionService.findById(id).orElseThrow();
-        if (animal.getBirthDate() != null) {
-            model.addAttribute("ageYears", Period.between(animal.getBirthDate(), LocalDate.now()).getYears());
+        try {
+            Animal animal = adoptionService.findById(id).orElseThrow();
+            if (animal.getBirthDate() != null) {
+                model.addAttribute("ageYears", Period.between(animal.getBirthDate(), LocalDate.now()).getYears());
+            }
+            model.addAttribute("species", adoptionService.getAllSpecies());
+            model.addAttribute("animal", animal);
+            model.addAttribute("admin", admin);
+            model.addAttribute("edit", edit);
+            model.addAttribute("isNew", false);
+            return "detall";
+        } catch (NoSuchElementException e) {
+            return "redirect:/";
+        } catch (Exception e) {
+            model.addAttribute("error", "Could not load animal: " + e.getMessage());
+            return "redirect:/";
         }
-        model.addAttribute("species", adoptionService.getAllSpecies());
-        model.addAttribute("animal", animal);
-        model.addAttribute("admin", admin);
-        model.addAttribute("edit", edit);
-        model.addAttribute("isNew", false);
-        return "detall";
     }
 
     @PostMapping("/animals/{id}/adopt")
     public String adoptAnimal(@PathVariable Long id) {
-        Animal animal = adoptionService.findById(id).orElseThrow();
-        animal.setAdopted(true);
-        animal.setAdoptedDate(LocalDate.now());
-        adoptionService.save(animal);
-        return "redirect:/animals/" + id;
+        try {
+            Animal animal = adoptionService.findById(id).orElseThrow();
+            animal.setAdopted(true);
+            animal.setAdoptedDate(LocalDate.now());
+            adoptionService.save(animal);
+            return "redirect:/animals/" + id;
+        } catch (NoSuchElementException e) {
+            return "redirect:/";
+        } catch (Exception e) {
+            return "redirect:/";
+        }
     }
 
     @PostMapping("/animals")
@@ -90,23 +109,38 @@ public class AdoptionController {
             model.addAttribute("isNew", true);
             return "detall";
         }
-        adoptionService.save(animal);
+        try {
+            adoptionService.save(animal);
+        } catch (Exception e) {
+            model.addAttribute("species", adoptionService.getAllSpecies());
+            model.addAttribute("admin", true);
+            model.addAttribute("isNew", true);
+            return "detall";
+        }
         return "redirect:/";
     }
 
     @PostMapping("/animals/{id}")
     public String updateAnimal(@PathVariable Long id, @ModelAttribute Animal animal) {
-        animal.setId(id);
-        if (animal.getSpeciesId() != null) {
-            adoptionService.findSpeciesById(animal.getSpeciesId()).ifPresent(animal::setSpecies);
+        try {
+            animal.setId(id);
+            if (animal.getSpeciesId() != null) {
+                adoptionService.findSpeciesById(animal.getSpeciesId()).ifPresent(animal::setSpecies);
+            }
+            adoptionService.save(animal);
+            return "redirect:/animals/" + id;
+        } catch (Exception e) {
+            return "redirect:/";
         }
-        adoptionService.save(animal);
-        return "redirect:/animals/" + id;
     }
 
     @PostMapping("/animals/{id}/delete")
     public String deleteAnimal(@PathVariable Long id) {
-        adoptionService.delete(id);
+        try {
+            adoptionService.delete(id);
+        } catch (Exception e) {
+            return "redirect:/";
+        }
         return "redirect:/";
     }
 
